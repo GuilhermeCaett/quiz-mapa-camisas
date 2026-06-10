@@ -592,8 +592,14 @@ h2 { font-size: clamp(30px, 7vw, 44px); }
 
 .carousel-conv {
   margin-top: 0;
+  position: relative;
+  width: calc(100% + 44px);
+  margin-left: -22px;
+  overflow: hidden;
+  margin-bottom: 22px;
 }
 .carousel-slide-conv {
+  flex: 0 0 100%;
   aspect-ratio: unset;
   display: flex;
   align-items: center;

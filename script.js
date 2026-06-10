@@ -10,7 +10,7 @@ const pauses = {
     : { msg: "Então você já sabe como é difícil encontrar fornecedores confiáveis." },
   4: () => ({ msg: "Esses são exatamente os problemas que usamos para filtrar os fornecedores." }),
   5: (answer) => (answer === "Revenda" || answer === "Uso próprio e revenda")
-    ? { msg: "Interessante. Alguns usuários relatam margens entre 100% e 300% revendendo modelos populares." }
+    ? { msg: "Alguns usuários relatam margens entre 100% e 300% revendendo modelos populares.", carousel: true }
     : null,
   6: () => ({ msg: "Nossa equipe levou meses para mapear e validar os contatos." }),
 };
@@ -207,18 +207,63 @@ function renderQuestion(question) {
 }
 
 function renderPause(pause) {
-  const { msg, img } = typeof pause === 'string' ? { msg: pause } : pause;
+  const { msg, img, carousel } = typeof pause === 'string' ? { msg: pause } : pause;
+  const convImages = ['./assets/conv.1.png','./assets/conv.2.png','./assets/conv.3.png','./assets/conv.4.png','./assets/conv.5.png'];
   transition(() => {
-    screen.innerHTML = `
-      <div class="pause-box">
-        ${img
-          ? `<img class="pause-img" src="${img}" alt="" />`
-          : `<div class="pause-icon">💡</div>`}
-        <p class="pause-message">${msg}</p>
-        <button class="cta pause-cta" type="button" id="pauseContinueBtn">Continuar →</button>
-      </div>
-    `;
+    if (carousel) {
+      screen.innerHTML = `
+        <div class="carousel-conv" id="pauseConvCarousel">
+          <div class="carousel-track" id="pauseConvTrack">
+            ${convImages.map(src => `<div class="carousel-slide-conv"><img src="${src}" alt="Depoimento" /></div>`).join('')}
+          </div>
+          <button class="carousel-btn carousel-prev" id="pauseConvPrev">&#8592;</button>
+          <button class="carousel-btn carousel-next" id="pauseConvNext">&#8594;</button>
+        </div>
+        <div style="display:flex;justify-content:center;gap:6px;margin:8px 0 4px;" id="pauseConvDots">
+          ${convImages.map((_, i) => `<span class="carousel-dot${i === 0 ? ' active' : ''}" data-i="${i}"></span>`).join('')}
+        </div>
+        <div class="pause-box" style="padding-top:16px;">
+          <p class="pause-message">${msg}</p>
+          <button class="cta pause-cta" type="button" id="pauseContinueBtn">Continuar →</button>
+        </div>
+      `;
+    } else {
+      const topHtml = img
+        ? `<img class="pause-img" src="${img}" alt="" />`
+        : `<div class="pause-icon">💡</div>`;
+      screen.innerHTML = `
+        <div class="pause-box">
+          ${topHtml}
+          <p class="pause-message">${msg}</p>
+          <button class="cta pause-cta" type="button" id="pauseContinueBtn">Continuar →</button>
+        </div>
+      `;
+    }
   });
+
+  if (carousel) {
+    const track = document.getElementById('pauseConvTrack');
+    const dots = [...document.querySelectorAll('#pauseConvDots .carousel-dot')];
+    const total = convImages.length;
+    let current = 0;
+    const goTo = i => {
+      current = (i + total) % total;
+      track.style.transform = `translateX(-${current * 100}%)`;
+      dots.forEach((d, j) => d.classList.toggle('active', j === current));
+    };
+    document.getElementById('pauseConvPrev').addEventListener('click', () => goTo(current - 1));
+    document.getElementById('pauseConvNext').addEventListener('click', () => goTo(current + 1));
+    dots.forEach(d => d.addEventListener('click', () => goTo(Number(d.dataset.i))));
+    const autoplay = setInterval(() => goTo(current + 1), 3000);
+    document.getElementById('pauseContinueBtn').addEventListener('click', () => {
+      clearInterval(autoplay);
+      state.step += 1;
+      state.pause = null;
+      saveState();
+      render(1);
+    });
+    return;
+  }
 
   document.getElementById("pauseContinueBtn").addEventListener("click", () => {
     state.step += 1;
