@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mapa Secreto — Fornecedores</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:    #0b0c12;
+      --card:  #13151f;
+      --card2: #1a1d2b;
+      --line:  rgba(255,255,255,.08);
+      --gold:  #f4c95d;
+      --green: #3ecf8e;
+      --red:   #ff5c5c;
+      --text:  #e8eaf0;
+      --muted: #7a8099;
+      --shadow: 0 8px 32px rgba(0,0,0,.5);
+    }
+
+    html, body { min-height: 100%; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: 0;
+      background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* ── LAYOUT ── */
+    .shell { position: relative; z-index: 1; max-width: 540px; margin: 0 auto; padding: 0 0 80px; min-height: 100vh; }
+
+    /* ── HEADER ── */
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(11,12,18,.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+      padding: 14px 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .back-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text); font-size: 18px;
+      display: grid; place-items: center; cursor: pointer;
+      flex-shrink: 0;
+      transition: background .15s;
+    }
+    .back-btn:hover { background: rgba(255,255,255,.09); }
+    .back-btn[hidden] { visibility: hidden; pointer-events: none; }
+    .topbar-title { font-size: 15px; font-weight: 800; flex: 1; }
+    .topbar-badge {
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      background: rgba(244,201,93,.12); color: var(--gold);
+      border: 1px solid rgba(244,201,93,.25);
+      border-radius: 20px; padding: 3px 10px;
+    }
+
+    /* ── SEARCH ── */
+    .search-wrap { padding: 16px 20px 0; }
+    .search-input {
+      width: 100%; padding: 12px 16px 12px 42px;
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 12px; color: var(--text); font-size: 14px;
+      font-family: inherit; outline: none;
+      transition: border-color .2s;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-input:focus { border-color: rgba(244,201,93,.4); }
+    .search-wrap { position: relative; }
+    .search-icon { position: absolute; left: 34px; top: 50%; transform: translateY(-50%); font-size: 15px; pointer-events: none; }
+
+    /* ── FILTERS ── */
+    .filters {
+      display: flex; gap: 8px; padding: 12px 20px;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .filters::-webkit-scrollbar { display: none; }
+    .filter-btn {
+      flex-shrink: 0; padding: 7px 16px;
+      border-radius: 20px; border: 1px solid var(--line);
+      background: transparent; color: var(--muted);
+      font-size: 13px; font-weight: 600; font-family: inherit;
+      cursor: pointer; white-space: nowrap;
+      transition: all .15s;
+    }
+    .filter-btn.active {
+      background: rgba(244,201,93,.12);
+      border-color: rgba(244,201,93,.35);
+      color: var(--gold);
+    }
+
+    /* ── SUPPLIER LIST ── */
+    .list-header { padding: 4px 20px 12px; font-size: 13px; color: var(--muted); }
+    .list-header span { color: var(--gold); font-weight: 700; }
+
+    .supplier-list { display: flex; flex-direction: column; gap: 10px; padding: 0 16px; }
+
+    .supplier-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex; align-items: center; gap: 14px;
+      cursor: pointer;
+      transition: border-color .18s, transform .12s;
+      text-decoration: none; color: inherit;
+    }
+    .supplier-card:hover { border-color: rgba(244,201,93,.3); transform: translateY(-1px); }
+
+    .supplier-avatar {
+      width: 52px; height: 52px; border-radius: 12px;
+      background: var(--card2);
+      border: 1px solid var(--line);
+      display: grid; place-items: center;
+      font-size: 26px; flex-shrink: 0;
+    }
+    .supplier-info { flex: 1; min-width: 0; }
+    .supplier-name { font-size: 15px; font-weight: 800; margin-bottom: 3px; }
+    .supplier-category { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    .supplier-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+    .tag {
+      font-size: 10px; font-weight: 700; letter-spacing: .04em;
+      padding: 2px 8px; border-radius: 20px;
+    }
+    .tag-green { background: rgba(62,207,142,.1); color: var(--green); border: 1px solid rgba(62,207,142,.2); }
+    .tag-gold  { background: rgba(244,201,93,.1);  color: var(--gold);  border: 1px solid rgba(244,201,93,.2); }
+    .tag-gray  { background: rgba(255,255,255,.05); color: var(--muted); border: 1px solid var(--line); }
+
+    .supplier-meta { text-align: right; flex-shrink: 0; }
+    .rating { font-size: 13px; font-weight: 800; color: var(--gold); }
+    .rating-stars { font-size: 10px; color: var(--gold); }
+    .arrow { color: var(--muted); font-size: 18px; margin-top: 4px; }
+
+    /* ── EMPTY ── */
+    .empty { text-align: center; padding: 60px 20px; color: var(--muted); }
+    .empty-icon { font-size: 40px; margin-bottom: 12px; }
+
+    /* ── DETAIL VIEW ── */
+    #detailView { display: none; }
+    #detailView.active { display: block; }
+    #listView.hidden { display: none; }
+
+    .detail-hero {
+      background: var(--card);
+      border-bottom: 1px solid var(--line);
+      padding: 28px 20px 24px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .detail-avatar {
+      width: 68px; height: 68px; border-radius: 16px;
+      background: var(--card2); border: 1px solid var(--line);
+      display: grid; place-items: center; font-size: 34px;
+      flex-shrink: 0;
+    }
+    .detail-name { font-size: 20px; font-weight: 900; margin-bottom: 4px; }
+    .detail-category { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+
+    .detail-body { padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+
+    .info-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .info-item {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 12px; padding: 14px;
+    }
+    .info-label { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
+    .info-value { font-size: 15px; font-weight: 800; color: var(--text); }
+    .info-value.green { color: var(--green); }
+    .info-value.gold  { color: var(--gold); }
+
+    .section-title { font-size: 13px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+
+    .desc-box {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 14px; padding: 16px;
+      font-size: 14px; line-height: 1.7; color: #c0c5d5;
+    }
+
+    .specialty-list { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .cta-group { display: flex; flex-direction: column; gap: 10px; }
+
+    .btn {
+      width: 100%; padding: 16px;
+      border-radius: 14px; border: none;
+      font-size: 15px; font-weight: 800;
+      font-family: inherit; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      text-decoration: none; transition: opacity .15s, transform .1s;
+    }
+    .btn:active { transform: scale(.98); }
+    .btn-whatsapp {
+      background: #25D366; color: #fff;
+    }
+    .btn-catalog {
+      background: var(--card2); color: var(--gold);
+      border: 1px solid rgba(244,201,93,.25);
+    }
+    .btn-catalog:hover { border-color: rgba(244,201,93,.5); }
+    .btn[hidden] { display: none; }
+
+    .warn-box {
+      background: rgba(244,201,93,.06);
+      border: 1px solid rgba(244,201,93,.2);
+      border-radius: 12px; padding: 14px 16px;
+      font-size: 13px; line-height: 1.6; color: #c8a84b;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+
+    @media (max-width: 520px) {
+      .shell { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <button class="back-btn" id="backBtn" hidden>←</button>
+    <div class="topbar-title">⚽ Mapa Secreto</div>
+    <div class="topbar-badge" id="topbarBadge">Fornecedores</div>
+  </div>
+
+  <!-- LIST VIEW -->
+  <div id="listView">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="searchInput" type="text" placeholder="Buscar fornecedor..." autocomplete="off" />
+    </div>
+
+    <div class="filters" id="filterBar"></div>
+
+    <div class="list-header" id="listHeader"></div>
+    <div class="supplier-list" id="supplierList"></div>
+  </div>
+
+  <!-- DETAIL VIEW -->
+  <div id="detailView">
+    <div class="detail-hero">
+      <div class="detail-avatar" id="dAvatar"></div>
+      <div>
+        <div class="detail-name" id="dName"></div>
+        <div class="detail-category" id="dCategory"></div>
+        <div class="supplier-tags" id="dTags"></div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="info-grid" id="dInfoGrid"></div>
+      <div>
+        <div class="section-title">Sobre o fornecedor</div>
+        <div class="desc-box" id="dDesc"></div>
+      </div>
+      <div>
+        <div class="section-title">Especialidades</div>
+        <div class="specialty-list" id="dSpecialties"></div>
+      </div>
+      <div class="warn-box">
+        <span>⚠️</span>
+        <span>Sempre peça amostras antes de fazer pedidos grandes. Negocie em português — a maioria entende via tradutor.</span>
+      </div>
+      <div class="cta-group">
+        <a class="btn btn-whatsapp" id="dWhatsapp" href="#" target="_blank" rel="noopener">
+          <span>💬</span> Falar no WhatsApp
+        </a>
+        <a class="btn btn-catalog" id="dCatalog" href="#" target="_blank" rel="noopener">
+          <span>📦</span> Ver catálogo completo
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  DADOS DOS FORNECEDORES — edite aqui!
+//  campos: id, name, emoji, category, location, minOrder,
+//          deliveryDays, rating, description, specialties[],
+//          tags[], whatsapp (só números), catalog (url ou "")
+// ═══════════════════════════════════════════════════════════
+const suppliers = [
+  {
+    id: 1,
+    name: "Fornecedor 01",
+    emoji: "🏆",
+    category: "Camisas Premium",
+    location: "Guangzhou, China",
+    minOrder: "5 unidades",
+    deliveryDays: "10–15 dias",
+    rating: "4.9",
+    description: "Especializado em camisas de times europeus e seleções com acabamento Player Version. Tecido AAA+, costuras reforçadas e patch original. Atende revendedores brasileiros há mais de 3 anos com excelente histórico.",
+    specialties: ["Premier League", "La Liga", "Seleção Brasileira", "Player Version", "Patch original"],
+    tags: [{ label: "Verificado", type: "green" }, { label: "Player Version", type: "gold" }],
+    whatsapp: "5511999990001",
+    whatsappMsg: "Olá! Vi seu contato no Mapa Secreto das Camisas de Time. Tenho interesse em camisas premium. Pode me enviar o catálogo atualizado?",
+    catalog: ""
+  },
+  {
+    id: 2,
+    name: "Fornecedor 02",
+    emoji: "🌍",
+    category: "Seleções Mundiais",
+    location: "Yiwu, China",
+    minOrder: "10 unidades",
+    deliveryDays: "12–18 dias",
+    rating: "4.8",
+    description: "Foco em camisas de seleções de todo o mundo. Ótima variedade de modelos — titular, reserva e edições especiais. Trabalha com kits completos (camisa + short) e preços competitivos para revendas.",
+    specialties: ["Argentina", "França", "Portugal", "Alemanha", "Itália", "Todas as seleções"],
+    tags: [{ label: "Verificado", type: "green" }, { label: "Seleções", type: "gold" }],
+    whatsapp: "5511999990002",
+    whatsappMsg: "Olá! Vi seu contato no Mapa Secreto das Camisas de Time. Gostaria de ver o catálogo de camisas de seleções. Quais modelos você tem disponíveis?",
+    catalog: ""
+  },
+  {
+    id: 3,
+    name: "Fornecedor 03",
+    emoji: "🕹️",
+    category: "Camisas Retrô",
+    location: "Shenzhen, China",
+    minOrder: "3 unidades",
+    deliveryDays: "15–20 dias",
+    rating: "4.7",
+    description: "Referência em edições antigas e modelos raros. Desde os anos 90 até os clássicos dos anos 2000. Ótima saída para colecionadores e revendedores de nicho. Mínimo de 3 peças por modelo.",
+    specialties: ["Retrô Brasil 94", "Barça anos 90", "Milan clássico", "Inter 98", "Real Madrid 2000"],
+    tags: [{ label: "Verificado", type: "green" }, { label: "Retrô", type: "gray" }],
+    whatsapp: "5511999990003",
+    whatsappMsg: "Olá! Vi seu contato no Mapa Secreto das Camisas de Time. Tenho interesse em camisas retrô. Quais modelos clássicos você tem no estoque?",
+    catalog: ""
+  },
+  {
+    id: 4,
+    name: "Fornecedor 04",
+    emoji: "🇧🇷",
+    category: "Times Brasileiros",
+    location: "Guangzhou, China",
+    minOrder: "5 unidades",
+    deliveryDays: "10–14 dias",
+    rating: "4.8",
+    description: "Especializado nos principais times do Brasileirão. Flamengo, Corinthians, Palmeiras, São Paulo, Vasco, Botafogo e mais. Atualiza o estoque assim que os novos uniformes são lançados oficialmente.",
+    specialties: ["Flamengo", "Corinthians", "Palmeiras", "São Paulo", "Vasco", "Botafogo"],
+    tags: [{ label: "Verificado", type: "green" }, { label: "Brasil", type: "gold" }],
+    whatsapp: "5511999990004",
+    whatsappMsg: "Olá! Vi seu contato no Mapa Secreto das Camisas de Time. Quero ver as camisas dos times brasileiros disponíveis. Pode me enviar o catálogo?",
+    catalog: ""
+  },
+  {
+    id: 5,
+    name: "Fornecedor 05",
+    emoji: "📦",
+    category: "Atacado Geral",
+    location: "Yiwu, China",
+    minOrder: "20 unidades",
+    deliveryDays: "10–15 dias",
+    rating: "4.6",
+    description: "Ideal para quem compra em grande volume. Preços mais baixos do mapa a partir de 20 unidades. Trabalha com todos os times populares e variedade de tamanhos. Ótimo para quem quer montar um estoque.",
+    specialties: ["Alto volume", "Preço de fábrica", "Todos os times", "Todos os tamanhos"],
+    tags: [{ label: "Verificado", type: "green" }, { label: "Atacado", type: "gray" }],
+    whatsapp: "5511999990005",
+    whatsappMsg: "Olá! Vi seu contato no Mapa Secreto das Camisas de Time. Tenho interesse em comprar no atacado. Qual o preço por unidade a partir de 20 peças?",
+    catalog: ""
+  }
+];
+
+// ═══════════════════════════════════════════════════════════
+//  APP
+// ═══════════════════════════════════════════════════════════
+const categories = ['Todos', ...new Set(suppliers.map(s => s.category))];
+let activeCategory = 'Todos';
+let searchQuery = '';
+
+const listView    = document.getElementById('listView');
+const detailView  = document.getElementById('detailView');
+const backBtn     = document.getElementById('backBtn');
+const topbarBadge = document.getElementById('topbarBadge');
+const filterBar   = document.getElementById('filterBar');
+const listHeader  = document.getElementById('listHeader');
+const supplierList = document.getElementById('supplierList');
+const searchInput = document.getElementById('searchInput');
+
+// build filters
+categories.forEach(cat => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn' + (cat === 'Todos' ? ' active' : '');
+  btn.textContent = cat;
+  btn.addEventListener('click', () => {
+    activeCategory = cat;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderList();
+  });
+  filterBar.appendChild(btn);
+});
+
+searchInput.addEventListener('input', e => {
+  searchQuery = e.target.value.toLowerCase();
+  renderList();
+});
+
+function renderList() {
+  const filtered = suppliers.filter(s => {
+    const matchCat = activeCategory === 'Todos' || s.category === activeCategory;
+    const matchSearch = !searchQuery || s.name.toLowerCase().includes(searchQuery) || s.category.toLowerCase().includes(searchQuery) || s.specialties.join(' ').toLowerCase().includes(searchQuery);
+    return matchCat && matchSearch;
+  });
+
+  listHeader.innerHTML = `<span>${filtered.length}</span> fornecedor${filtered.length !== 1 ? 'es' : ''} encontrado${filtered.length !== 1 ? 's' : ''}`;
+
+  if (filtered.length === 0) {
+    supplierList.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div><p>Nenhum fornecedor encontrado.<br>Tente outro filtro.</p></div>`;
+    return;
+  }
+
+  supplierList.innerHTML = filtered.map(s => `
+    <div class="supplier-card" data-id="${s.id}">
+      <div class="supplier-avatar">${s.emoji}</div>
+      <div class="supplier-info">
+        <div class="supplier-name">${s.name}</div>
+        <div class="supplier-category">${s.category} • ${s.location}</div>
+        <div class="supplier-tags">
+          ${s.tags.map(t => `<span class="tag tag-${t.type}">${t.label}</span>`).join('')}
+        </div>
+      </div>
+      <div class="supplier-meta">
+        <div class="rating">⭐ ${s.rating}</div>
+        <div class="arrow">›</div>
+      </div>
+    </div>
+  `).join('');
+
+  supplierList.querySelectorAll('.supplier-card').forEach(card => {
+    card.addEventListener('click', () => openDetail(Number(card.dataset.id)));
+  });
+}
+
+function openDetail(id) {
+  const s = suppliers.find(x => x.id === id);
+  if (!s) return;
+
+  document.getElementById('dAvatar').textContent    = s.emoji;
+  document.getElementById('dName').textContent      = s.name;
+  document.getElementById('dCategory').textContent  = s.category + ' • ' + s.location;
+  document.getElementById('dTags').innerHTML        = s.tags.map(t => `<span class="tag tag-${t.type}">${t.label}</span>`).join('');
+  document.getElementById('dDesc').textContent      = s.description;
+
+  document.getElementById('dInfoGrid').innerHTML = `
+    <div class="info-item"><div class="info-label">Pedido mínimo</div><div class="info-value gold">${s.minOrder}</div></div>
+    <div class="info-item"><div class="info-label">Prazo de entrega</div><div class="info-value">${s.deliveryDays}</div></div>
+    <div class="info-item"><div class="info-label">Avaliação</div><div class="info-value gold">⭐ ${s.rating}</div></div>
+    <div class="info-item"><div class="info-label">Localização</div><div class="info-value" style="font-size:13px">${s.location}</div></div>
+  `;
+
+  document.getElementById('dSpecialties').innerHTML = s.specialties.map(sp => `<span class="tag tag-gray">${sp}</span>`).join('');
+
+  const waLink = `https://wa.me/${s.whatsapp}?text=${encodeURIComponent(s.whatsappMsg)}`;
+  document.getElementById('dWhatsapp').href = waLink;
+
+  const catalogBtn = document.getElementById('dCatalog');
+  if (s.catalog) {
+    catalogBtn.href = s.catalog;
+    catalogBtn.removeAttribute('hidden');
+  } else {
+    catalogBtn.setAttribute('hidden', '');
+  }
+
+  listView.classList.add('hidden');
+  detailView.classList.add('active');
+  backBtn.removeAttribute('hidden');
+  topbarBadge.textContent = s.name;
+  window.scrollTo(0, 0);
+}
+
+backBtn.addEventListener('click', () => {
+  detailView.classList.remove('active');
+  listView.classList.remove('hidden');
+  backBtn.setAttribute('hidden', '');
+  topbarBadge.textContent = 'Fornecedores';
+  window.scrollTo(0, 0);
+});
+
+renderList();
+</script>
+</body>
+</html>
