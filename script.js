@@ -375,7 +375,7 @@ function renderResult() {
 
       <div class="price-box">
         <div class="price-label">Acesso completo ao Mapa Secreto</div>
-        <div class="price-from">de <span>R$197</span></div>
+        <div class="price-from">de <span>R$297</span></div>
         <div class="price-main">R$<span class="price-value">37</span><span class="price-cents">,00</span></div>
         <div class="price-desc">Pagamento único • Acesso vitalício • Entrega imediata</div>
         <a class="cta" href="${CHECKOUT_URL}" data-checkout-link>LIBERAR MEU ACESSO AGORA</a>
