@@ -522,8 +522,38 @@ h2 { font-size: clamp(30px, 7vw, 44px); }
   margin-top: 8px;
 }
 
-.badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; }
-.badge { color: #ffe8a3; background: rgba(244,201,93,.10); border: 1px solid rgba(244,201,93,.20); padding: 8px 10px; border-radius: 99px; font-size: 12px; font-weight: 900; }
+.deliverables {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 24px;
+}
+.deliverable {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 18px;
+  padding: 16px;
+}
+.deliverable-icon {
+  font-size: 22px;
+  line-height: 1;
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+.deliverable-name {
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+.deliverable-desc {
+  font-size: 13px;
+  font-weight: 500;
+  color: #a7adbb;
+  line-height: 1.5;
+}
 
 @media (max-width: 520px) {
   .app-shell { padding: 0; align-items: start; }

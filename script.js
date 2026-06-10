@@ -306,14 +306,50 @@ function renderResult() {
         </ul>
       </div>
 
-      <h2>O que você vai receber</h2>
-      <div class="badges">
-        <span class="badge">Fornecedores atuais</span>
-        <span class="badge">Retrôs</span>
-        <span class="badge">Seleções</span>
-        <span class="badge">Player Version</span>
-        <span class="badge">Como evitar golpes</span>
-        <span class="badge">Acesso vitalício</span>
+      <p class="testimonials-title">O que você vai receber</p>
+      <div class="deliverables">
+        <div class="deliverable">
+          <span class="deliverable-icon">📋</span>
+          <div>
+            <div class="deliverable-name">+23 Fornecedores verificados</div>
+            <div class="deliverable-desc">Contatos ativos e testados pela nossa equipe, com preço de importação direto — sem atravessador, sem risco de golpe.</div>
+          </div>
+        </div>
+        <div class="deliverable">
+          <span class="deliverable-icon">🕰️</span>
+          <div>
+            <div class="deliverable-name">Rota de camisas retrô</div>
+            <div class="deliverable-desc">Fornecedores especializados em edições antigas e raras, que você não encontra em loja nenhuma no Brasil.</div>
+          </div>
+        </div>
+        <div class="deliverable">
+          <span class="deliverable-icon">🌍</span>
+          <div>
+            <div class="deliverable-name">Camisas de seleções</div>
+            <div class="deliverable-desc">Contatos com acesso a seleções do mundo todo — incluindo versões que nunca chegam nas lojas brasileiras.</div>
+          </div>
+        </div>
+        <div class="deliverable">
+          <span class="deliverable-icon">⚡</span>
+          <div>
+            <div class="deliverable-name">Player Version</div>
+            <div class="deliverable-desc">A mesma camisa que os jogadores usam em campo, com tecido e acabamento profissional, pelo preço de importação.</div>
+          </div>
+        </div>
+        <div class="deliverable">
+          <span class="deliverable-icon">🛡️</span>
+          <div>
+            <div class="deliverable-name">Guia anti-golpe</div>
+            <div class="deliverable-desc">Aprenda a identificar fornecedor falso, camisa de qualidade inferior e nunca mais perca dinheiro comprando errado.</div>
+          </div>
+        </div>
+        <div class="deliverable">
+          <span class="deliverable-icon">♾️</span>
+          <div>
+            <div class="deliverable-name">Acesso vitalício + atualizações</div>
+            <div class="deliverable-desc">Pague uma vez e acesse para sempre. Toda vez que novos contatos forem validados, o mapa é atualizado automaticamente.</div>
+          </div>
+        </div>
       </div>
 
       <div class="testimonials-section">
