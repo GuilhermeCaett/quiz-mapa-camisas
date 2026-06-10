@@ -131,6 +131,9 @@ function render(dir = 1) {
   progressPercent.textContent = `${percent}%`;
   progressFill.style.width = `${percent}%`;
 
+  const onPitch = !state.pause && state.step >= questions.length;
+  resetBtn.style.display = onPitch ? "none" : "";
+
   if (state.pause) renderPause(state.pause);
   else if (state.step < questions.length) renderQuestion(questions[state.step]);
   else renderLoadingThenResult();
