@@ -373,6 +373,9 @@ function renderResult() {
         </div>
       </div>
 
+      <h2>Garanta seu acesso agora</h2>
+      <p class="subtitle">Pare de perder horas procurando contato aleatório. Acesse o Mapa Secreto das Camisas de Time™ e veja a rota completa.</p>
+
       <div class="price-box">
         <div class="price-label">Acesso completo ao Mapa Secreto</div>
         <div class="price-from">de <span>R$297</span></div>
