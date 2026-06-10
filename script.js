@@ -355,7 +355,7 @@ function renderResult() {
         </ul>
       </div>
 
-      <h2>Quanto você economiza na prática</h2>
+      <h2>Quanto <span class="title-gold">você economiza</span> na prática</h2>
       <img class="comparacao-img" src="./assets/comparacao.png" alt="Comparação de preços antes e depois do Mapa Secreto" />
       <button class="cta cta-pulse cta-anchor" type="button" id="ctaAnchorBtn">💰 Quero economizar também</button>
 
@@ -406,7 +406,7 @@ function renderResult() {
       </div>
 
       <div class="testimonials-section">
-        <h2>O que dizem quem já tem o Mapa</h2>
+        <h2><span class="title-gold">O que dizem</span> quem já tem o Mapa</h2>
         <div class="carousel-wrap carousel-conv">
           <div class="carousel-track" id="convTrack">
             ${["conv.1.png","conv.2.png","conv.3.png","conv.4.png","conv.5.png"].map((src, i) => `
@@ -423,7 +423,7 @@ function renderResult() {
         </div>
       </div>
 
-      <h2>Garanta seu acesso agora</h2>
+      <h2><span class="title-gold">Garanta</span> seu acesso agora</h2>
       <p class="subtitle">Pare de perder horas procurando contato aleatório. Acesse o Mapa Secreto das Camisas de Time™ e veja a rota completa.</p>
 
       <div class="price-box">
