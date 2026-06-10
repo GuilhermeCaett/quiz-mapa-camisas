@@ -393,6 +393,11 @@ h2 { font-size: clamp(30px, 7vw, 44px); }
 .screen > h2 {
   margin-top: 32px;
 }
+.cta-anchor {
+  margin-top: 14px;
+  font-size: 15px;
+}
+
 .comparacao-img {
   width: 100%;
   border-radius: 18px;
@@ -410,6 +415,14 @@ h2 { font-size: clamp(30px, 7vw, 44px); }
 .check-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
 .check-list li { color: #e7ebf3; font-weight: 700; line-height: 1.35; }
 .check-list li::before { content: "✅"; margin-right: 8px; }
+
+@keyframes pulse-cta {
+  0%, 100% { box-shadow: 0 16px 35px rgba(244,201,93,.22); transform: scale(1); }
+  50%       { box-shadow: 0 20px 50px rgba(244,201,93,.50); transform: scale(1.025); }
+}
+.cta-pulse {
+  animation: pulse-cta 1.8s ease-in-out infinite;
+}
 
 .cta {
   width: 100%;

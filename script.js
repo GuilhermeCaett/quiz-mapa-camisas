@@ -308,6 +308,7 @@ function renderResult() {
 
       <h2>Quanto você economiza na prática</h2>
       <img class="comparacao-img" src="./assets/comparacao.png" alt="Comparação de preços antes e depois do Mapa Secreto" />
+      <button class="cta cta-pulse cta-anchor" type="button" id="ctaAnchorBtn">💰 Quero economizar também</button>
 
       <h2>O que você vai receber</h2>
       <div class="deliverables">
@@ -381,7 +382,7 @@ function renderResult() {
         <div class="price-from">de <span>R$297</span></div>
         <div class="price-main">R$<span class="price-value">37</span><span class="price-cents">,00</span></div>
         <div class="price-desc">Pagamento único • Acesso vitalício • Entrega imediata</div>
-        <a class="cta" href="${CHECKOUT_URL}" data-checkout-link>LIBERAR MEU ACESSO AGORA</a>
+        <a class="cta cta-pulse" href="${CHECKOUT_URL}" data-checkout-link>LIBERAR MEU ACESSO AGORA</a>
       </div>
 
       <div class="guarantee-box">
@@ -396,6 +397,10 @@ function renderResult() {
 
   initCarousel();
   initConvCarousel();
+
+  document.getElementById("ctaAnchorBtn").addEventListener("click", () => {
+    document.querySelector(".price-box").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 }
 
 function initCarousel() {
