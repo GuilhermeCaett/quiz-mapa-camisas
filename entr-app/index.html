@@ -269,6 +269,84 @@
     }
     .route-stop { animation: stop-in .35s ease both; }
 
+    /* ── WELCOME SCREEN ── */
+    #welcomeView {
+      min-height: calc(100vh - 60px);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 40px 28px;
+      text-align: center;
+      gap: 0;
+    }
+    #welcomeView.hidden { display: none; }
+    #listView.hidden { display: none; }
+
+    .welcome-glow {
+      width: 110px; height: 110px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(244,201,93,.18), transparent 70%);
+      display: grid; place-items: center;
+      font-size: 54px;
+      margin-bottom: 28px;
+      animation: welcome-pulse 3s ease-in-out infinite;
+    }
+    @keyframes welcome-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(244,201,93,.25); }
+      50%       { box-shadow: 0 0 0 22px rgba(244,201,93,0); }
+    }
+
+    .welcome-eyebrow {
+      font-size: 11px; font-weight: 900; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .welcome-title {
+      font-size: clamp(26px, 6vw, 34px); font-weight: 900;
+      line-height: 1.2; margin-bottom: 16px;
+    }
+    .welcome-title span { color: var(--gold); }
+    .welcome-subtitle {
+      font-size: 15px; color: var(--muted); line-height: 1.7;
+      max-width: 340px; margin-bottom: 36px;
+    }
+
+    .welcome-stats {
+      display: flex; gap: 12px; margin-bottom: 36px; width: 100%;
+      justify-content: center;
+    }
+    .welcome-stat {
+      flex: 1; max-width: 130px;
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 14px; padding: 14px 10px;
+    }
+    .welcome-stat-value { font-size: 22px; font-weight: 900; color: var(--gold); }
+    .welcome-stat-label { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+    .welcome-btn {
+      width: 100%; max-width: 340px;
+      padding: 18px 24px; border: none; border-radius: 14px;
+      background: linear-gradient(135deg, var(--gold), #e6a820);
+      color: #0b0c12; font-size: 17px; font-weight: 900;
+      font-family: inherit; cursor: pointer;
+      animation: pulse-cta 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse-cta {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(244,201,93,.45); }
+      50%       { box-shadow: 0 0 0 14px rgba(244,201,93,0); }
+    }
+    .welcome-note { font-size: 12px; color: var(--muted); margin-top: 14px; }
+
+    @keyframes fade-slide-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    #welcomeView > * { animation: fade-slide-in .5s ease both; }
+    #welcomeView > *:nth-child(1) { animation-delay: .05s; }
+    #welcomeView > *:nth-child(2) { animation-delay: .12s; }
+    #welcomeView > *:nth-child(3) { animation-delay: .19s; }
+    #welcomeView > *:nth-child(4) { animation-delay: .26s; }
+    #welcomeView > *:nth-child(5) { animation-delay: .33s; }
+    #welcomeView > *:nth-child(6) { animation-delay: .40s; }
+
     @media (max-width: 520px) { .shell { max-width: 100%; } }
   </style>
 </head>
@@ -282,10 +360,33 @@
     <div class="topbar-badge" id="topbarBadge">Fornecedores</div>
   </div>
 
-  <!-- LIST VIEW -->
-  <div id="listView">
-    <div class="filters" id="filterBar"></div>
+  <!-- WELCOME VIEW -->
+  <div id="welcomeView">
+    <div class="welcome-glow">🗺️</div>
+    <div class="welcome-eyebrow">✦ seu acesso exclusivo</div>
+    <h1 class="welcome-title">O Mapa Secreto<br>das <span>Camisas de Time</span></h1>
+    <p class="welcome-subtitle">Aqui estão os fornecedores verificados pela nossa equipe. Cada parada da rota é um contato direto, testado e aprovado.</p>
+    <div class="welcome-stats">
+      <div class="welcome-stat">
+        <div class="welcome-stat-value">+23</div>
+        <div class="welcome-stat-label">Fornecedores</div>
+      </div>
+      <div class="welcome-stat">
+        <div class="welcome-stat-value">100%</div>
+        <div class="welcome-stat-label">Verificados</div>
+      </div>
+      <div class="welcome-stat">
+        <div class="welcome-stat-value">87%</div>
+        <div class="welcome-stat-label">Economia média</div>
+      </div>
+    </div>
+    <button class="welcome-btn" id="startBtn">🚀 Começar minha jornada</button>
+    <p class="welcome-note">Acesso vitalício • Atualizado regularmente</p>
+  </div>
 
+  <!-- LIST VIEW -->
+  <div id="listView" class="hidden">
+    <div class="filters" id="filterBar"></div>
     <div class="map-route" id="mapRoute"></div>
   </div>
 
@@ -422,12 +523,19 @@ const suppliers = [
 const categories = ['Todos', ...new Set(suppliers.map(s => s.category))];
 let activeCategory = 'Todos';
 
+const welcomeView = document.getElementById('welcomeView');
 const listView    = document.getElementById('listView');
 const detailView  = document.getElementById('detailView');
 const backBtn     = document.getElementById('backBtn');
 const topbarBadge = document.getElementById('topbarBadge');
 const filterBar   = document.getElementById('filterBar');
 const mapRoute    = document.getElementById('mapRoute');
+
+document.getElementById('startBtn').addEventListener('click', () => {
+  welcomeView.classList.add('hidden');
+  listView.classList.remove('hidden');
+  window.scrollTo(0, 0);
+});
 
 // filters
 categories.forEach(cat => {
