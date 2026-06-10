@@ -684,6 +684,8 @@ h2 { font-size: clamp(30px, 7vw, 44px); }
 }
 .pause-img {
   width: 100%;
+  max-height: 460px;
+  object-fit: contain;
   border-radius: 14px;
 }
 .pause-message {
