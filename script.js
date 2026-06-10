@@ -306,7 +306,7 @@ function renderResult() {
         </ul>
       </div>
 
-      <p class="testimonials-title">O que você vai receber</p>
+      <h2>O que você vai receber</h2>
       <div class="deliverables">
         <div class="deliverable">
           <span class="deliverable-icon">📋</span>
@@ -353,7 +353,7 @@ function renderResult() {
       </div>
 
       <div class="testimonials-section">
-        <p class="testimonials-title">O que dizem quem já tem o Mapa</p>
+        <h2>O que dizem quem já tem o Mapa</h2>
         <div class="carousel-wrap carousel-conv">
           <div class="carousel-track" id="convTrack">
             ${["conv.1.png","conv.2.png","conv.3.png","conv.4.png","conv.5.png"].map((src, i) => `
