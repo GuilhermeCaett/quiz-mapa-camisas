@@ -386,6 +386,46 @@ function renderResult() {
         <a class="cta cta-pulse" href="${CHECKOUT_URL}" data-checkout-link>LIBERAR MEU ACESSO AGORA</a>
       </div>
 
+      <div class="faq-section">
+        <h2>Perguntas frequentes</h2>
+        <div class="faq-list" id="faqList">
+          ${[
+            {
+              q: "Serei taxado na alfândega?",
+              a: "Pode acontecer, mas no Mapa Secreto ensinamos os truques que os compradores experientes usam para minimizar — ou até zerar — as taxas. São estratégias simples de declaração e fracionamento de compras que fazem toda a diferença. Muita gente compra sem pagar um centavo de taxa."
+            },
+            {
+              q: "Quanto tempo demora para chegar?",
+              a: "Os fornecedores do mapa enviam por avião, então o trajeto da China até o Brasil leva em média 4 a 5 dias. Depois disso, o pacote passa pela análise da aduana brasileira, que pode levar até 15 dias dependendo do volume de importações no período. No total, a maioria das pessoas recebe entre 10 e 20 dias após o pedido."
+            },
+            {
+              q: "Preciso saber inglês ou chinês?",
+              a: "Não. Você pode usar o Google Tradutor para se comunicar em inglês com os fornecedores — mas muitos deles já falam um inglês básico e entendem bem. Alguns até respondem em português automaticamente. A comunicação é mais simples do que parece e no mapa temos dicas de como se comunicar sem nenhum problema."
+            },
+            {
+              q: "As camisas são de boa qualidade?",
+              a: "Sim. Os fornecedores listados no mapa foram selecionados justamente pela qualidade. Trabalhamos com versões Torcedor e Player Version — a mesma linha que é revendida aqui no Brasil por R$200, R$300 ou mais. A diferença é que você acessa o preço de origem, sem o atravessador."
+            },
+            {
+              q: "Posso revender as camisas que comprar?",
+              a: "Totalmente. Muitos usuários do Mapa começaram comprando para uso próprio e perceberam que dava para ganhar dinheiro revendendo. Com o preço de importação, as margens são de 100% a 300% em alguns modelos. O mapa inclui uma rota específica para quem quer comprar em volume."
+            },
+            {
+              q: "E se eu não gostar do Mapa Secreto?",
+              a: "Sem problema. Você tem 7 dias de garantia total. Se por qualquer motivo não ficar satisfeito, basta enviar uma mensagem e devolvemos 100% do seu dinheiro — sem perguntas, sem burocracia, na hora."
+            }
+          ].map((item, i) => `
+            <div class="faq-item" data-faq="${i}">
+              <button class="faq-q" type="button">
+                <span>${item.q}</span>
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-a">${item.a}</div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+
       <div class="guarantee-box">
         <div class="guarantee-icon">🛡️</div>
         <div>
@@ -398,6 +438,15 @@ function renderResult() {
 
   initCarousel();
   initConvCarousel();
+
+  document.querySelectorAll(".faq-q").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains("open");
+      document.querySelectorAll(".faq-item.open").forEach(el => el.classList.remove("open"));
+      if (!isOpen) item.classList.add("open");
+    });
+  });
 
   document.getElementById("ctaAnchorBtn").addEventListener("click", () => {
     document.querySelector(".price-box").scrollIntoView({ behavior: "smooth", block: "start" });

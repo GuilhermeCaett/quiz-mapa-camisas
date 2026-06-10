@@ -498,6 +498,66 @@ h2 { font-size: clamp(30px, 7vw, 44px); }
   margin-top: 0;
 }
 
+.faq-section {
+  margin-top: 32px;
+}
+.faq-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+.faq-item {
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255,255,255,.03);
+}
+.faq-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+  line-height: 1.35;
+}
+.faq-icon {
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--gold);
+  flex: 0 0 auto;
+  transition: transform .25s ease;
+  line-height: 1;
+}
+.faq-item.open .faq-icon {
+  transform: rotate(45deg);
+}
+.faq-item.open {
+  border-color: rgba(244,201,93,.22);
+  background: rgba(244,201,93,.05);
+}
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 16px;
+  color: #a7adbb;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.6;
+  transition: max-height .35s ease, padding .35s ease;
+}
+.faq-item.open .faq-a {
+  max-height: 300px;
+  padding: 0 16px 16px;
+}
+
 .guarantee-box {
   display: flex;
   gap: 14px;
