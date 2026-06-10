@@ -431,6 +431,90 @@ h2 { font-size: clamp(30px, 7vw, 44px); }
 }
 .cta-sub { text-align: center; color: var(--muted); font-size: 12px; font-weight: 800; margin-top: 12px; }
 
+.price-box {
+  margin-top: 32px;
+  background: linear-gradient(160deg, rgba(31,191,117,.10), rgba(244,201,93,.08));
+  border: 1px solid rgba(244,201,93,.25);
+  border-radius: 24px;
+  padding: 24px 20px 20px;
+  text-align: center;
+}
+.price-label {
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.price-from {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.price-from span {
+  text-decoration: line-through;
+}
+.price-main {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -.03em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.price-value {
+  font-size: 64px;
+  font-weight: 900;
+  letter-spacing: -.04em;
+  color: var(--gold);
+}
+.price-cents {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--gold);
+}
+.price-desc {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+.price-box .cta {
+  margin-top: 0;
+}
+
+.guarantee-box {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-top: 16px;
+  background: rgba(31,191,117,.07);
+  border: 1px solid rgba(31,191,117,.22);
+  border-radius: 20px;
+  padding: 18px;
+  margin-bottom: 8px;
+}
+.guarantee-icon {
+  font-size: 28px;
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+.guarantee-title {
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.guarantee-desc {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #a7adbb;
+  line-height: 1.55;
+}
+
 .carousel-conv {
   margin-top: 0;
 }

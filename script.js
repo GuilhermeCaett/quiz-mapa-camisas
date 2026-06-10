@@ -373,9 +373,21 @@ function renderResult() {
         </div>
       </div>
 
-      <p class="subtitle">Pare de perder horas procurando contato aleatório. Acesse o Mapa Secreto das Camisas de Time™ e veja a rota completa.</p>
-      <a class="cta" href="${CHECKOUT_URL}" data-checkout-link>LIBERAR MEU ACESSO AGORA</a>
-      <div class="cta-sub">Acesso imediato após a confirmação do pagamento • Garantia de 7 dias</div>
+      <div class="price-box">
+        <div class="price-label">Acesso completo ao Mapa Secreto</div>
+        <div class="price-from">de <span>R$197</span></div>
+        <div class="price-main">R$<span class="price-value">37</span><span class="price-cents">,00</span></div>
+        <div class="price-desc">Pagamento único • Acesso vitalício • Entrega imediata</div>
+        <a class="cta" href="${CHECKOUT_URL}" data-checkout-link>LIBERAR MEU ACESSO AGORA</a>
+      </div>
+
+      <div class="guarantee-box">
+        <div class="guarantee-icon">🛡️</div>
+        <div>
+          <div class="guarantee-title">Garantia de 7 dias</div>
+          <p class="guarantee-desc">Se por qualquer motivo você não ficar satisfeito, devolvemos 100% do seu dinheiro. Sem perguntas, sem burocracia, sem enrolação. Basta enviar uma mensagem e o reembolso é feito na hora.</p>
+        </div>
+      </div>
     `;
   });
 
