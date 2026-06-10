@@ -306,6 +306,9 @@ function renderResult() {
         </ul>
       </div>
 
+      <h2>Quanto você economiza na prática</h2>
+      <img class="comparacao-img" src="./assets/comparacao.png" alt="Comparação de preços antes e depois do Mapa Secreto" />
+
       <h2>O que você vai receber</h2>
       <div class="deliverables">
         <div class="deliverable">

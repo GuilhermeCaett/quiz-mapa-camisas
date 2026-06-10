@@ -393,6 +393,12 @@ h2 { font-size: clamp(30px, 7vw, 44px); }
 .screen > h2 {
   margin-top: 32px;
 }
+.comparacao-img {
+  width: 100%;
+  border-radius: 18px;
+  margin-top: 14px;
+  border: 1px solid rgba(255,255,255,.08);
+}
 
 .result-card {
   background: rgba(255,255,255,.05);
