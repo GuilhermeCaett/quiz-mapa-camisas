@@ -390,6 +390,10 @@ h2 { font-size: clamp(30px, 7vw, 44px); }
   transform: scale(1.3);
 }
 
+.screen > h2 {
+  margin-top: 32px;
+}
+
 .result-card {
   background: rgba(255,255,255,.05);
   border: 1px solid var(--line);
@@ -440,7 +444,7 @@ h2 { font-size: clamp(30px, 7vw, 44px); }
 }
 
 .testimonials-section {
-  margin: 28px 0 8px;
+  margin: 32px 0 8px;
 }
 .testimonials-title {
   font-size: 13px;
@@ -525,7 +529,7 @@ h2 { font-size: clamp(30px, 7vw, 44px); }
 .deliverables {
   display: grid;
   gap: 12px;
-  margin: 0 0 24px;
+  margin: 14px 0 0;
 }
 .deliverable {
   display: flex;
