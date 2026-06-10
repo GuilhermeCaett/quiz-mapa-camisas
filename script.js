@@ -132,7 +132,8 @@ function render(dir = 1) {
   progressFill.style.width = `${percent}%`;
 
   const onPitch = !state.pause && state.step >= questions.length;
-  resetBtn.style.display = onPitch ? "none" : "";
+  const onFirst = !state.pause && state.step === 0;
+  resetBtn.style.display = (onPitch || onFirst) ? "none" : "";
 
   if (state.pause) renderPause(state.pause);
   else if (state.step < questions.length) renderQuestion(questions[state.step]);
