@@ -318,46 +318,18 @@ function renderResult() {
 
       <div class="testimonials-section">
         <p class="testimonials-title">O que dizem quem já tem o Mapa</p>
-        <div class="testimonials-list">
-          <div class="testimonial">
-            <div class="testimonial-header">
-              <div class="testimonial-avatar">R</div>
-              <div>
-                <div class="testimonial-name">Rafael M.</div>
-                <div class="testimonial-stars">★★★★★</div>
+        <div class="carousel-wrap carousel-conv">
+          <div class="carousel-track" id="convTrack">
+            ${["conv.1.png","conv.2.png","conv.3.png","conv.4.png","conv.5.png"].map((src, i) => `
+              <div class="carousel-slide carousel-slide-conv">
+                <img src="./assets/${src}" alt="Depoimento ${i + 1}" loading="lazy" />
               </div>
-            </div>
-            <p>"Comprei 3 camisas por R$97 no total. A mesma qualidade que eu pagava R$280 cada. Valeu demais."</p>
+            `).join("")}
           </div>
-          <div class="testimonial">
-            <div class="testimonial-header">
-              <div class="testimonial-avatar">J</div>
-              <div>
-                <div class="testimonial-name">Juliana T.</div>
-                <div class="testimonial-stars">★★★★★</div>
-              </div>
-            </div>
-            <p>"Comecei revendendo pra amigos. Em 2 semanas já paguei o mapa e ainda sobrou."</p>
-          </div>
-          <div class="testimonial">
-            <div class="testimonial-header">
-              <div class="testimonial-avatar">G</div>
-              <div>
-                <div class="testimonial-name">Gabriel S.</div>
-                <div class="testimonial-stars">★★★★★</div>
-              </div>
-            </div>
-            <p>"Tentei achar fornecedor sozinho por meses. No mapa encontrei em 10 minutos. Não tem comparação."</p>
-          </div>
-          <div class="testimonial">
-            <div class="testimonial-header">
-              <div class="testimonial-avatar">L</div>
-              <div>
-                <div class="testimonial-name">Lucas P.</div>
-                <div class="testimonial-stars">★★★★★</div>
-              </div>
-            </div>
-            <p>"A seção de retrôs é incrível. Achei camisa que não encontrava há anos, pelo preço de um lanche."</p>
+          <button class="carousel-btn carousel-prev" id="convPrev" aria-label="Anterior">‹</button>
+          <button class="carousel-btn carousel-next" id="convNext" aria-label="Próxima">›</button>
+          <div class="carousel-dots" id="convDots">
+            ${["","","","",""].map((_, i) => `<span class="carousel-dot${i === 0 ? " active" : ""}" data-i="${i}"></span>`).join("")}
           </div>
         </div>
       </div>
@@ -369,6 +341,7 @@ function renderResult() {
   });
 
   initCarousel();
+  initConvCarousel();
 }
 
 function initCarousel() {
@@ -403,6 +376,38 @@ function initCarousel() {
   track.addEventListener("touchend", e => {
     const diff = startX - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 40) { goTo(diff > 0 ? current + 1 : current - 1); resetAuto(); }
+  }, { passive: true });
+
+  startAuto();
+}
+
+function initConvCarousel() {
+  const track = document.getElementById("convTrack");
+  const dots = [...document.querySelectorAll("#convDots .carousel-dot")];
+  const total = 5;
+  let current = 0;
+  let autoTimer = null;
+
+  function goTo(index) {
+    current = (index + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle("active", i === current));
+  }
+
+  function startAuto() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(() => goTo(current + 1), 3500);
+  }
+
+  document.getElementById("convPrev").addEventListener("click", () => { goTo(current - 1); startAuto(); });
+  document.getElementById("convNext").addEventListener("click", () => { goTo(current + 1); startAuto(); });
+  dots.forEach(d => d.addEventListener("click", () => { goTo(Number(d.dataset.i)); startAuto(); }));
+
+  let startX = 0;
+  track.addEventListener("touchstart", e => { startX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener("touchend", e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) { goTo(diff > 0 ? current + 1 : current - 1); startAuto(); }
   }, { passive: true });
 
   startAuto();

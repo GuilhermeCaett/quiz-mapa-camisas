@@ -421,6 +421,24 @@ h2 { font-size: clamp(30px, 7vw, 44px); }
 }
 .cta-sub { text-align: center; color: var(--muted); font-size: 12px; font-weight: 800; margin-top: 12px; }
 
+.carousel-conv {
+  margin-top: 0;
+}
+.carousel-slide-conv {
+  aspect-ratio: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d0f18;
+  min-height: 200px;
+}
+.carousel-slide-conv img {
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+  object-fit: contain;
+}
+
 .testimonials-section {
   margin: 28px 0 8px;
 }
