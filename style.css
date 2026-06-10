@@ -50,7 +50,7 @@ body::before {
   border: 1px solid var(--line);
   border-radius: 28px;
   box-shadow: var(--shadow);
-  overflow: hidden;
+  overflow: clip; /* clip = visual clipping sem criar scroll container */
   position: relative;
 }
 
