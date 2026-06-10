@@ -97,22 +97,23 @@ function saveState() {
 
 function transition(renderFn) {
   const wrap = screen.parentElement;
-  wrap.style.overflow = 'hidden';
 
-  // Clona o conteúdo atual para animação de saída
+  // Snapshot da tela atual para animação de saída
   const ghost = document.createElement('div');
   ghost.className = 'screen screen-ghost';
   ghost.innerHTML = screen.innerHTML;
   ghost.style.cssText = `
-    position:absolute;inset:0;z-index:5;padding:26px 22px 30px;pointer-events:none;
+    position:absolute;top:0;left:0;right:0;z-index:5;padding:26px 22px 30px;
+    pointer-events:none;overflow:hidden;
     animation: ${_navDir > 0 ? 'tx-out-left' : 'tx-out-right'} .28s ease forwards;
   `;
   wrap.appendChild(ghost);
 
-  // Renderiza novo conteúdo
+  // Renderiza novo conteúdo e reseta overflow do card
   renderFn();
+  wrap.style.overflow = '';
 
-  // Anima entrada do novo conteúdo
+  // Anima entrada
   screen.style.animation = 'none';
   void screen.offsetWidth;
   screen.style.animation = `${_navDir > 0 ? 'tx-in-right' : 'tx-in-left'} .32s ease forwards`;
