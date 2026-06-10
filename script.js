@@ -3,14 +3,14 @@ const STORAGE_KEY = "mapa_camisas_quiz_state_v2";
 
 // pauses[questionIndex](answer) → { msg, img? } | null
 const pauses = {
-  1: () => ({ msg: "Você está pagando em média 180% a 400% acima do custo de importação.", img: "/assets/comparacao2.png" }),
+  1: () => ({ msg: "Você está pagando em média 180% a 400% acima do custo de importação.", img: "/assets/comparacao2.webp" }),
   2: () => ({ msg: "Nem todos os fornecedores trabalham com esse tipo de camisa. Por isso nosso sistema separa os contatos por categoria." }),
   3: (answer) => answer === "Nunca"
     ? { msg: "A maioria perde dinheiro comprando dos fornecedores errados." }
     : { msg: "Então você já sabe como é difícil encontrar fornecedores confiáveis." },
   4: () => ({ msg: "Esses são exatamente os problemas que usamos para filtrar os fornecedores." }),
   5: (answer) => (answer === "Revenda" || answer === "Uso próprio e revenda")
-    ? { msg: "Alguns usuários relatam margens entre 100% e 300% revendendo modelos populares.", img: "/assets/depoimento1quiz.png" }
+    ? { msg: "Alguns usuários relatam margens entre 100% e 300% revendendo modelos populares.", img: "/assets/depoimento1quiz.webp" }
     : null,
   6: () => ({ msg: "Nossa equipe levou meses para mapear e validar os contatos." }),
 };
@@ -144,7 +144,7 @@ function render(dir = 1) {
 function renderQuestion(question) {
   transition(() => {
     screen.innerHTML = `
-      ${state.step === 0 ? `<img class="hero-image" src="./assets/produto-mapa-camisas.png" alt="Mapa Secreto das Camisas de Time">` : ""}
+      ${state.step === 0 ? `<img class="hero-image" src="./assets/produto-mapa-camisas.webp" alt="Mapa Secreto das Camisas de Time">` : ""}
       <div class="eyebrow">${question.eyebrow}</div>
       <h2>${question.title}</h2>
       <p class="subtitle">${question.subtitle}</p>
@@ -208,7 +208,7 @@ function renderQuestion(question) {
 
 function renderPause(pause) {
   const { msg, img, carousel } = typeof pause === 'string' ? { msg: pause } : pause;
-  const convImages = ['./assets/conv.1.png','./assets/conv.2.png','./assets/conv.3.png','./assets/conv.4.png','./assets/conv.5.png'];
+  const convImages = ['./assets/conv.1.webp','./assets/conv.2.webp','./assets/conv.3.webp','./assets/conv.4.webp','./assets/conv.5.webp'];
   transition(() => {
     if (carousel) {
       screen.innerHTML = `
@@ -306,18 +306,18 @@ function renderLoadingThenResult() {
 }
 
 const carouselImages = [
-  "./assets/br-amarela.png",
-  "./assets/flamengo.png",
-  "./assets/arg-branca.png",
-  "./assets/palmeiras.png",
-  "./assets/port-vermelha.png",
-  "./assets/corinthians.png",
-  "./assets/espanha.png",
-  "./assets/vasco.png",
-  "./assets/fr-azul.png",
-  "./assets/arg-azulescuro.png",
-  "./assets/br-azul.png",
-  "./assets/port-branca.png",
+  "./assets/br-amarela.webp",
+  "./assets/flamengo.webp",
+  "./assets/arg-branca.webp",
+  "./assets/palmeiras.webp",
+  "./assets/port-vermelha.webp",
+  "./assets/corinthians.webp",
+  "./assets/espanha.webp",
+  "./assets/vasco.webp",
+  "./assets/fr-azul.webp",
+  "./assets/arg-azulescuro.webp",
+  "./assets/br-azul.webp",
+  "./assets/port-branca.webp",
 ];
 
 function renderResult() {
@@ -356,7 +356,7 @@ function renderResult() {
       </div>
 
       <h2>Quanto <span class="title-gold">você economiza</span> na prática</h2>
-      <img class="comparacao-img" src="./assets/comparacao.png" alt="Comparação de preços antes e depois do Mapa Secreto" />
+      <img class="comparacao-img" src="./assets/comparacao.webp" alt="Comparação de preços antes e depois do Mapa Secreto" />
       <button class="cta cta-pulse cta-anchor" type="button" id="ctaAnchorBtn">💰 Quero economizar também</button>
 
       <h2>O que você vai receber</h2>
@@ -409,7 +409,7 @@ function renderResult() {
         <h2><span class="title-gold">O que dizem</span> quem já tem o Mapa</h2>
         <div class="carousel-wrap carousel-conv">
           <div class="carousel-track" id="convTrack">
-            ${["conv.1.png","conv.2.png","conv.3.png","conv.4.png","conv.5.png"].map((src, i) => `
+            ${["conv.1.webp","conv.2.webp","conv.3.webp","conv.4.webp","conv.5.webp"].map((src, i) => `
               <div class="carousel-slide carousel-slide-conv">
                 <img src="./assets/${src}" alt="Depoimento ${i + 1}" loading="lazy" />
               </div>
