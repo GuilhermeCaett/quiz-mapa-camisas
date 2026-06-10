@@ -253,11 +253,18 @@ function renderLoadingThenResult() {
 }
 
 const carouselImages = [
-  "./assets/camisa-1.jpg",
-  "./assets/camisa-2.jpg",
-  "./assets/camisa-3.jpg",
-  "./assets/camisa-4.jpg",
-  "./assets/camisa-5.jpg",
+  "./assets/br-amarela.png",
+  "./assets/flamengo.png",
+  "./assets/arg-branca.png",
+  "./assets/palmeiras.png",
+  "./assets/port-vermelha.png",
+  "./assets/corinthians.png",
+  "./assets/espanha.png",
+  "./assets/vasco.png",
+  "./assets/fr-azul.png",
+  "./assets/arg-azulescuro.png",
+  "./assets/br-azul.png",
+  "./assets/port-branca.png",
 ];
 
 function renderResult() {
