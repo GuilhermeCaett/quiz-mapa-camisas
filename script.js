@@ -3,14 +3,14 @@ const STORAGE_KEY = "mapa_camisas_quiz_state_v2";
 
 // pauses[questionIndex](answer) → { msg, img? } | null
 const pauses = {
-  1: () => ({ msg: "Você está pagando em média 180% a 400% acima do custo de importação.", img: "./assets/comparacao2.png" }),
+  1: () => ({ msg: "Você está pagando em média 180% a 400% acima do custo de importação.", img: "/assets/comparacao2.png" }),
   2: () => ({ msg: "Nem todos os fornecedores trabalham com esse tipo de camisa. Por isso nosso sistema separa os contatos por categoria." }),
   3: (answer) => answer === "Nunca"
     ? { msg: "A maioria perde dinheiro comprando dos fornecedores errados." }
     : { msg: "Então você já sabe como é difícil encontrar fornecedores confiáveis." },
   4: () => ({ msg: "Esses são exatamente os problemas que usamos para filtrar os fornecedores." }),
   5: (answer) => (answer === "Revenda" || answer === "Uso próprio e revenda")
-    ? { msg: "Alguns usuários relatam margens entre 100% e 300% revendendo modelos populares.", img: "./assets/depoimento1quiz.png" }
+    ? { msg: "Alguns usuários relatam margens entre 100% e 300% revendendo modelos populares.", img: "/assets/depoimento1quiz.png" }
     : null,
   6: () => ({ msg: "Nossa equipe levou meses para mapear e validar os contatos." }),
 };
@@ -229,7 +229,7 @@ function renderPause(pause) {
       `;
     } else {
       const topHtml = img
-        ? `<img class="pause-img" src="${img}" alt="" />`
+        ? `<img class="pause-img" src="${img}" alt="" onerror="this.style.display='none'" />`
         : `<div class="pause-icon">💡</div>`;
       screen.innerHTML = `
         <div class="pause-box">
