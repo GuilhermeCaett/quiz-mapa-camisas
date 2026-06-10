@@ -10,7 +10,7 @@ const pauses = {
     : { msg: "Então você já sabe como é difícil encontrar fornecedores confiáveis." },
   4: () => ({ msg: "Esses são exatamente os problemas que usamos para filtrar os fornecedores." }),
   5: (answer) => (answer === "Revenda" || answer === "Uso próprio e revenda")
-    ? { msg: "Alguns usuários relatam margens entre 100% e 300% revendendo modelos populares.", carousel: true }
+    ? { msg: "Alguns usuários relatam margens entre 100% e 300% revendendo modelos populares.", img: "./assets/depoimento1quiz.png" }
     : null,
   6: () => ({ msg: "Nossa equipe levou meses para mapear e validar os contatos." }),
 };
