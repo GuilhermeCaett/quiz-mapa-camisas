@@ -1,18 +1,18 @@
 const CHECKOUT_URL = "https://pay.cakto.com.br/st63i4q_921898";
 const STORAGE_KEY = "mapa_camisas_quiz_state_v2";
 
-// pauses[questionIndex](answer) → string | null
+// pauses[questionIndex](answer) → { msg, img? } | null
 const pauses = {
-  1: () => "Você está pagando em média 180% a 400% acima do custo de importação.",
-  2: () => "Nem todos os fornecedores trabalham com esse tipo de camisa. Por isso nosso sistema separa os contatos por categoria.",
+  1: () => ({ msg: "Você está pagando em média 180% a 400% acima do custo de importação.", img: "./assets/comparacao2.png" }),
+  2: () => ({ msg: "Nem todos os fornecedores trabalham com esse tipo de camisa. Por isso nosso sistema separa os contatos por categoria." }),
   3: (answer) => answer === "Nunca"
-    ? "A maioria perde dinheiro comprando dos fornecedores errados."
-    : "Então você já sabe como é difícil encontrar fornecedores confiáveis.",
-  4: () => "Esses são exatamente os problemas que usamos para filtrar os fornecedores.",
+    ? { msg: "A maioria perde dinheiro comprando dos fornecedores errados." }
+    : { msg: "Então você já sabe como é difícil encontrar fornecedores confiáveis." },
+  4: () => ({ msg: "Esses são exatamente os problemas que usamos para filtrar os fornecedores." }),
   5: (answer) => (answer === "Revenda" || answer === "Uso próprio e revenda")
-    ? "Interessante. Alguns usuários relatam margens entre 100% e 300% revendendo modelos populares."
+    ? { msg: "Interessante. Alguns usuários relatam margens entre 100% e 300% revendendo modelos populares." }
     : null,
-  6: () => "Nossa equipe levou meses para mapear e validar os contatos.",
+  6: () => ({ msg: "Nossa equipe levou meses para mapear e validar os contatos." }),
 };
 
 const questions = [
@@ -176,9 +176,9 @@ function renderQuestion(question) {
         .map(b => question.options[Number(b.dataset.option)]);
       state.answers[state.step] = { question: question.title, answer: chosen.join(", ") };
       const pauseFn = pauses[state.step];
-      const msg = pauseFn ? pauseFn(chosen[0]) : null;
-      if (msg) {
-        state.pause = msg;
+      const pauseObj = pauseFn ? pauseFn(chosen[0]) : null;
+      if (pauseObj) {
+        state.pause = pauseObj;
       } else {
         state.step += 1;
         state.pause = null;
@@ -192,9 +192,9 @@ function renderQuestion(question) {
         const chosen = question.options[Number(btn.dataset.option)];
         state.answers[state.step] = { question: question.title, answer: chosen };
         const pauseFn = pauses[state.step];
-        const msg = pauseFn ? pauseFn(chosen) : null;
-        if (msg) {
-          state.pause = msg;
+        const pauseObj = pauseFn ? pauseFn(chosen) : null;
+        if (pauseObj) {
+          state.pause = pauseObj;
         } else {
           state.step += 1;
           state.pause = null;
@@ -206,12 +206,15 @@ function renderQuestion(question) {
   }
 }
 
-function renderPause(message) {
+function renderPause(pause) {
+  const { msg, img } = typeof pause === 'string' ? { msg: pause } : pause;
   transition(() => {
     screen.innerHTML = `
       <div class="pause-box">
-        <div class="pause-icon">💡</div>
-        <p class="pause-message">${message}</p>
+        ${img
+          ? `<img class="pause-img" src="${img}" alt="" />`
+          : `<div class="pause-icon">💡</div>`}
+        <p class="pause-message">${msg}</p>
         <button class="cta pause-cta" type="button" id="pauseContinueBtn">Continuar →</button>
       </div>
     `;
