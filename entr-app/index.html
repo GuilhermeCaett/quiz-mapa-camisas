@@ -17,10 +17,8 @@
       --line:  rgba(255,255,255,.08);
       --gold:  #f4c95d;
       --green: #3ecf8e;
-      --red:   #ff5c5c;
       --text:  #e8eaf0;
       --muted: #7a8099;
-      --shadow: 0 8px 32px rgba(0,0,0,.5);
     }
 
     html, body { min-height: 100%; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
@@ -30,14 +28,13 @@
       position: fixed; inset: 0; z-index: 0;
       background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
       background-size: 42px 42px;
-      mask-image: linear-gradient(to bottom, black 0%, transparent 60%);
+      mask-image: linear-gradient(to bottom, black 0%, transparent 55%);
       pointer-events: none;
     }
 
-    /* ── LAYOUT ── */
-    .shell { position: relative; z-index: 1; max-width: 540px; margin: 0 auto; padding: 0 0 80px; min-height: 100vh; }
+    .shell { position: relative; z-index: 1; max-width: 540px; margin: 0 auto; padding-bottom: 80px; min-height: 100vh; }
 
-    /* ── HEADER ── */
+    /* ── TOPBAR ── */
     .topbar {
       position: sticky; top: 0; z-index: 50;
       background: rgba(11,12,18,.92);
@@ -52,8 +49,7 @@
       background: rgba(255,255,255,.04);
       color: var(--text); font-size: 18px;
       display: grid; place-items: center; cursor: pointer;
-      flex-shrink: 0;
-      transition: background .15s;
+      flex-shrink: 0; transition: background .15s;
     }
     .back-btn:hover { background: rgba(255,255,255,.09); }
     .back-btn[hidden] { visibility: hidden; pointer-events: none; }
@@ -62,26 +58,12 @@
       font-size: 11px; font-weight: 700; letter-spacing: .08em;
       background: rgba(244,201,93,.12); color: var(--gold);
       border: 1px solid rgba(244,201,93,.25);
-      border-radius: 20px; padding: 3px 10px;
+      border-radius: 20px; padding: 3px 10px; white-space: nowrap;
     }
-
-    /* ── SEARCH ── */
-    .search-wrap { padding: 16px 20px 0; }
-    .search-input {
-      width: 100%; padding: 12px 16px 12px 42px;
-      background: var(--card); border: 1px solid var(--line);
-      border-radius: 12px; color: var(--text); font-size: 14px;
-      font-family: inherit; outline: none;
-      transition: border-color .2s;
-    }
-    .search-input::placeholder { color: var(--muted); }
-    .search-input:focus { border-color: rgba(244,201,93,.4); }
-    .search-wrap { position: relative; }
-    .search-icon { position: absolute; left: 34px; top: 50%; transform: translateY(-50%); font-size: 15px; pointer-events: none; }
 
     /* ── FILTERS ── */
     .filters {
-      display: flex; gap: 8px; padding: 12px 20px;
+      display: flex; gap: 8px; padding: 14px 20px;
       overflow-x: auto; scrollbar-width: none;
     }
     .filters::-webkit-scrollbar { display: none; }
@@ -90,8 +72,7 @@
       border-radius: 20px; border: 1px solid var(--line);
       background: transparent; color: var(--muted);
       font-size: 13px; font-weight: 600; font-family: inherit;
-      cursor: pointer; white-space: nowrap;
-      transition: all .15s;
+      cursor: pointer; white-space: nowrap; transition: all .15s;
     }
     .filter-btn.active {
       background: rgba(244,201,93,.12);
@@ -99,35 +80,107 @@
       color: var(--gold);
     }
 
-    /* ── SUPPLIER LIST ── */
-    .list-header { padding: 4px 20px 12px; font-size: 13px; color: var(--muted); }
-    .list-header span { color: var(--gold); font-weight: 700; }
+    /* ── MAP ROUTE ── */
+    .map-route {
+      padding: 8px 20px 0 20px;
+      position: relative;
+    }
 
-    .supplier-list { display: flex; flex-direction: column; gap: 10px; padding: 0 16px; }
+    /* vertical road line */
+    .map-route::before {
+      content: "";
+      position: absolute;
+      left: 46px; /* 20px padding + 26px to center of pin */
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        rgba(244,201,93,.25) 4%,
+        rgba(244,201,93,.25) 96%,
+        transparent 100%
+      );
+    }
 
-    .supplier-card {
+    /* START label */
+    .route-start {
+      display: flex; align-items: center; gap: 12px;
+      padding: 0 0 24px 0;
+      position: relative;
+    }
+    .route-start-pin {
+      width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--gold), #e6a820);
+      display: grid; place-items: center;
+      font-size: 22px;
+      box-shadow: 0 0 0 6px rgba(244,201,93,.12), 0 0 0 12px rgba(244,201,93,.05);
+      z-index: 2; position: relative;
+    }
+    .route-start-text { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+    .route-start-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+    /* each stop */
+    .route-stop {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding-bottom: 28px;
+      position: relative;
+      cursor: pointer;
+    }
+    .route-stop:last-child { padding-bottom: 12px; }
+
+    /* pin */
+    .stop-pin {
+      width: 52px; flex-shrink: 0;
+      display: flex; flex-direction: column; align-items: center;
+      position: relative; z-index: 2;
+    }
+    .stop-dot {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--card2);
+      border: 2px solid rgba(244,201,93,.35);
+      display: grid; place-items: center;
+      font-size: 22px;
+      transition: border-color .2s, transform .15s, box-shadow .2s;
+      position: relative;
+    }
+    .route-stop:hover .stop-dot {
+      border-color: var(--gold);
+      transform: scale(1.06);
+      box-shadow: 0 0 0 6px rgba(244,201,93,.12);
+    }
+    .stop-num {
+      font-size: 10px; font-weight: 900; color: var(--muted);
+      margin-top: 5px; letter-spacing: .06em;
+    }
+
+    /* connector arm from dot to card */
+    .stop-arm {
+      width: 18px; height: 2px;
+      background: rgba(244,201,93,.2);
+      margin-top: 25px; flex-shrink: 0;
+    }
+
+    /* card */
+    .stop-card {
+      flex: 1; min-width: 0;
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: 16px;
-      padding: 16px;
-      display: flex; align-items: center; gap: 14px;
-      cursor: pointer;
+      padding: 14px 16px;
       transition: border-color .18s, transform .12s;
-      text-decoration: none; color: inherit;
     }
-    .supplier-card:hover { border-color: rgba(244,201,93,.3); transform: translateY(-1px); }
+    .route-stop:hover .stop-card {
+      border-color: rgba(244,201,93,.3);
+      transform: translateY(-1px);
+    }
+    .stop-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+    .stop-name { font-size: 15px; font-weight: 800; }
+    .stop-rating { font-size: 12px; font-weight: 700; color: var(--gold); white-space: nowrap; }
+    .stop-category { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+    .stop-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+    .stop-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+    .stop-detail { font-size: 12px; color: var(--gold); font-weight: 700; }
+    .stop-min { font-size: 11px; color: var(--muted); }
 
-    .supplier-avatar {
-      width: 52px; height: 52px; border-radius: 12px;
-      background: var(--card2);
-      border: 1px solid var(--line);
-      display: grid; place-items: center;
-      font-size: 26px; flex-shrink: 0;
-    }
-    .supplier-info { flex: 1; min-width: 0; }
-    .supplier-name { font-size: 15px; font-weight: 800; margin-bottom: 3px; }
-    .supplier-category { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
-    .supplier-tags { display: flex; flex-wrap: wrap; gap: 4px; }
     .tag {
       font-size: 10px; font-weight: 700; letter-spacing: .04em;
       padding: 2px 8px; border-radius: 20px;
@@ -136,12 +189,22 @@
     .tag-gold  { background: rgba(244,201,93,.1);  color: var(--gold);  border: 1px solid rgba(244,201,93,.2); }
     .tag-gray  { background: rgba(255,255,255,.05); color: var(--muted); border: 1px solid var(--line); }
 
-    .supplier-meta { text-align: right; flex-shrink: 0; }
-    .rating { font-size: 13px; font-weight: 800; color: var(--gold); }
-    .rating-stars { font-size: 10px; color: var(--gold); }
-    .arrow { color: var(--muted); font-size: 18px; margin-top: 4px; }
+    /* END label */
+    .route-end {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 0 0;
+    }
+    .route-end-pin {
+      width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(62,207,142,.1);
+      border: 2px solid rgba(62,207,142,.4);
+      display: grid; place-items: center;
+      font-size: 22px;
+    }
+    .route-end-text { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--green); }
+    .route-end-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
 
-    /* ── EMPTY ── */
+    /* empty */
     .empty { text-align: center; padding: 60px 20px; color: var(--muted); }
     .empty-icon { font-size: 40px; margin-bottom: 12px; }
 
@@ -151,34 +214,24 @@
     #listView.hidden { display: none; }
 
     .detail-hero {
-      background: var(--card);
-      border-bottom: 1px solid var(--line);
-      padding: 28px 20px 24px;
-      display: flex; align-items: center; gap: 16px;
+      background: var(--card); border-bottom: 1px solid var(--line);
+      padding: 28px 20px 24px; display: flex; align-items: center; gap: 16px;
     }
     .detail-avatar {
-      width: 68px; height: 68px; border-radius: 16px;
-      background: var(--card2); border: 1px solid var(--line);
-      display: grid; place-items: center; font-size: 34px;
-      flex-shrink: 0;
+      width: 68px; height: 68px; border-radius: 50%;
+      background: var(--card2); border: 2px solid rgba(244,201,93,.3);
+      display: grid; place-items: center; font-size: 32px; flex-shrink: 0;
     }
     .detail-name { font-size: 20px; font-weight: 900; margin-bottom: 4px; }
     .detail-category { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
 
     .detail-body { padding: 20px; display: flex; flex-direction: column; gap: 20px; }
 
-    .info-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .info-item {
-      background: var(--card); border: 1px solid var(--line);
-      border-radius: 12px; padding: 14px;
-    }
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .info-item { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
     .info-label { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
-    .info-value { font-size: 15px; font-weight: 800; color: var(--text); }
-    .info-value.green { color: var(--green); }
-    .info-value.gold  { color: var(--gold); }
+    .info-value { font-size: 15px; font-weight: 800; }
+    .info-value.gold { color: var(--gold); }
 
     .section-title { font-size: 13px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
 
@@ -189,39 +242,34 @@
     }
 
     .specialty-list { display: flex; flex-wrap: wrap; gap: 8px; }
-
     .cta-group { display: flex; flex-direction: column; gap: 10px; }
 
     .btn {
-      width: 100%; padding: 16px;
-      border-radius: 14px; border: none;
-      font-size: 15px; font-weight: 800;
-      font-family: inherit; cursor: pointer;
+      width: 100%; padding: 16px; border-radius: 14px; border: none;
+      font-size: 15px; font-weight: 800; font-family: inherit; cursor: pointer;
       display: flex; align-items: center; justify-content: center; gap: 8px;
       text-decoration: none; transition: opacity .15s, transform .1s;
     }
     .btn:active { transform: scale(.98); }
-    .btn-whatsapp {
-      background: #25D366; color: #fff;
-    }
-    .btn-catalog {
-      background: var(--card2); color: var(--gold);
-      border: 1px solid rgba(244,201,93,.25);
-    }
-    .btn-catalog:hover { border-color: rgba(244,201,93,.5); }
+    .btn-whatsapp { background: #25D366; color: #fff; }
+    .btn-catalog { background: var(--card2); color: var(--gold); border: 1px solid rgba(244,201,93,.25); }
     .btn[hidden] { display: none; }
 
     .warn-box {
-      background: rgba(244,201,93,.06);
-      border: 1px solid rgba(244,201,93,.2);
+      background: rgba(244,201,93,.06); border: 1px solid rgba(244,201,93,.2);
       border-radius: 12px; padding: 14px 16px;
       font-size: 13px; line-height: 1.6; color: #c8a84b;
       display: flex; gap: 10px; align-items: flex-start;
     }
 
-    @media (max-width: 520px) {
-      .shell { max-width: 100%; }
+    /* stop appear animation */
+    @keyframes stop-in {
+      from { opacity: 0; transform: translateX(16px); }
+      to   { opacity: 1; transform: translateX(0); }
     }
+    .route-stop { animation: stop-in .35s ease both; }
+
+    @media (max-width: 520px) { .shell { max-width: 100%; } }
   </style>
 </head>
 <body>
@@ -236,15 +284,9 @@
 
   <!-- LIST VIEW -->
   <div id="listView">
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input class="search-input" id="searchInput" type="text" placeholder="Buscar fornecedor..." autocomplete="off" />
-    </div>
-
     <div class="filters" id="filterBar"></div>
 
-    <div class="list-header" id="listHeader"></div>
-    <div class="supplier-list" id="supplierList"></div>
+    <div class="map-route" id="mapRoute"></div>
   </div>
 
   <!-- DETAIL VIEW -->
@@ -254,7 +296,7 @@
       <div>
         <div class="detail-name" id="dName"></div>
         <div class="detail-category" id="dCategory"></div>
-        <div class="supplier-tags" id="dTags"></div>
+        <div class="stop-tags" id="dTags"></div>
       </div>
     </div>
     <div class="detail-body">
@@ -379,18 +421,15 @@ const suppliers = [
 // ═══════════════════════════════════════════════════════════
 const categories = ['Todos', ...new Set(suppliers.map(s => s.category))];
 let activeCategory = 'Todos';
-let searchQuery = '';
 
 const listView    = document.getElementById('listView');
 const detailView  = document.getElementById('detailView');
 const backBtn     = document.getElementById('backBtn');
 const topbarBadge = document.getElementById('topbarBadge');
 const filterBar   = document.getElementById('filterBar');
-const listHeader  = document.getElementById('listHeader');
-const supplierList = document.getElementById('supplierList');
-const searchInput = document.getElementById('searchInput');
+const mapRoute    = document.getElementById('mapRoute');
 
-// build filters
+// filters
 categories.forEach(cat => {
   const btn = document.createElement('button');
   btn.className = 'filter-btn' + (cat === 'Todos' ? ' active' : '');
@@ -399,49 +438,65 @@ categories.forEach(cat => {
     activeCategory = cat;
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    renderList();
+    renderMap();
   });
   filterBar.appendChild(btn);
 });
 
-searchInput.addEventListener('input', e => {
-  searchQuery = e.target.value.toLowerCase();
-  renderList();
-});
-
-function renderList() {
-  const filtered = suppliers.filter(s => {
-    const matchCat = activeCategory === 'Todos' || s.category === activeCategory;
-    const matchSearch = !searchQuery || s.name.toLowerCase().includes(searchQuery) || s.category.toLowerCase().includes(searchQuery) || s.specialties.join(' ').toLowerCase().includes(searchQuery);
-    return matchCat && matchSearch;
-  });
-
-  listHeader.innerHTML = `<span>${filtered.length}</span> fornecedor${filtered.length !== 1 ? 'es' : ''} encontrado${filtered.length !== 1 ? 's' : ''}`;
+function renderMap() {
+  const filtered = suppliers.filter(s =>
+    activeCategory === 'Todos' || s.category === activeCategory
+  );
 
   if (filtered.length === 0) {
-    supplierList.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div><p>Nenhum fornecedor encontrado.<br>Tente outro filtro.</p></div>`;
+    mapRoute.innerHTML = `<div class="empty"><div class="empty-icon">🗺️</div><p>Nenhum fornecedor nessa categoria.</p></div>`;
     return;
   }
 
-  supplierList.innerHTML = filtered.map(s => `
-    <div class="supplier-card" data-id="${s.id}">
-      <div class="supplier-avatar">${s.emoji}</div>
-      <div class="supplier-info">
-        <div class="supplier-name">${s.name}</div>
-        <div class="supplier-category">${s.category} • ${s.location}</div>
-        <div class="supplier-tags">
-          ${s.tags.map(t => `<span class="tag tag-${t.type}">${t.label}</span>`).join('')}
-        </div>
-      </div>
-      <div class="supplier-meta">
-        <div class="rating">⭐ ${s.rating}</div>
-        <div class="arrow">›</div>
+  mapRoute.innerHTML = `
+    <div class="route-start">
+      <div class="route-start-pin">🗺️</div>
+      <div>
+        <div class="route-start-text">Início da rota</div>
+        <div class="route-start-sub">${filtered.length} fornecedor${filtered.length !== 1 ? 'es' : ''} verificado${filtered.length !== 1 ? 's' : ''}</div>
       </div>
     </div>
-  `).join('');
 
-  supplierList.querySelectorAll('.supplier-card').forEach(card => {
-    card.addEventListener('click', () => openDetail(Number(card.dataset.id)));
+    ${filtered.map((s, i) => `
+      <div class="route-stop" data-id="${s.id}" style="animation-delay:${i * 60}ms">
+        <div class="stop-pin">
+          <div class="stop-dot">${s.emoji}</div>
+          <div class="stop-num">Nº ${String(i + 1).padStart(2, '0')}</div>
+        </div>
+        <div class="stop-arm"></div>
+        <div class="stop-card">
+          <div class="stop-card-top">
+            <div class="stop-name">${s.name}</div>
+            <div class="stop-rating">⭐ ${s.rating}</div>
+          </div>
+          <div class="stop-category">${s.category} • ${s.location}</div>
+          <div class="stop-tags">
+            ${s.tags.map(t => `<span class="tag tag-${t.type}">${t.label}</span>`).join('')}
+          </div>
+          <div class="stop-footer">
+            <div class="stop-min">Mín: ${s.minOrder}</div>
+            <div class="stop-detail">Ver detalhes →</div>
+          </div>
+        </div>
+      </div>
+    `).join('')}
+
+    <div class="route-end">
+      <div class="route-end-pin">✅</div>
+      <div>
+        <div class="route-end-text">Fim da rota</div>
+        <div class="route-end-sub">Clique em qualquer parada para ver detalhes</div>
+      </div>
+    </div>
+  `;
+
+  mapRoute.querySelectorAll('.route-stop').forEach(stop => {
+    stop.addEventListener('click', () => openDetail(Number(stop.dataset.id)));
   });
 }
 
@@ -449,11 +504,11 @@ function openDetail(id) {
   const s = suppliers.find(x => x.id === id);
   if (!s) return;
 
-  document.getElementById('dAvatar').textContent    = s.emoji;
-  document.getElementById('dName').textContent      = s.name;
-  document.getElementById('dCategory').textContent  = s.category + ' • ' + s.location;
-  document.getElementById('dTags').innerHTML        = s.tags.map(t => `<span class="tag tag-${t.type}">${t.label}</span>`).join('');
-  document.getElementById('dDesc').textContent      = s.description;
+  document.getElementById('dAvatar').textContent   = s.emoji;
+  document.getElementById('dName').textContent     = s.name;
+  document.getElementById('dCategory').textContent = s.category + ' • ' + s.location;
+  document.getElementById('dTags').innerHTML       = s.tags.map(t => `<span class="tag tag-${t.type}">${t.label}</span>`).join('');
+  document.getElementById('dDesc').textContent     = s.description;
 
   document.getElementById('dInfoGrid').innerHTML = `
     <div class="info-item"><div class="info-label">Pedido mínimo</div><div class="info-value gold">${s.minOrder}</div></div>
@@ -490,7 +545,7 @@ backBtn.addEventListener('click', () => {
   window.scrollTo(0, 0);
 });
 
-renderList();
+renderMap();
 </script>
 </body>
 </html>
