@@ -1,4 +1,4 @@
-const CHECKOUT_URL = "https://pay.cakto.com.br/COLOQUE_SEU_LINK_AQUI";
+const CHECKOUT_URL = "https://pay.cakto.com.br/9rshhnt_926524";
 const STORAGE_KEY = "mapa_tenis_quiz_state_v1";
 
 // pauses[questionIndex](answer) → { msg, img? } | null
