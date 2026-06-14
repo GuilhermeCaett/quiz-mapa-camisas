@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mapa Secreto dos Tênis Importados™</title>
+  <meta name="description" content="Faça a análise e descubra qual rota de fornecedores de tênis combina com seu perfil." />
+
+  <!-- UTMify UTMs -->
+  <script
+    src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+    data-utmify-prevent-xcod-sck
+    data-utmify-prevent-subids
+    async
+    defer
+  ></script>
+
+  <!-- Pixel UTMify + Meta -->
+  <script>
+    window.pixelId = "6a1f8ea0c9e2eee869020d70";
+    var a = document.createElement("script");
+    a.setAttribute("async", "");
+    a.setAttribute("defer", "");
+    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+    document.head.appendChild(a);
+  </script>
+
+  <!-- Pixel UTMify + TikTok -->
+  <script>
+    window.tikTokPixelId = "6a29d1c19adc8336562bcdba";
+    var a = document.createElement("script");
+    a.setAttribute("async", "");
+    a.setAttribute("defer", "");
+    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel-tiktok.js");
+    document.head.appendChild(a);
+  </script>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "x5d7vji05j");
+  </script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BBPBF8XLZQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-BBPBF8XLZQ');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <section class="quiz-card" aria-live="polite">
+      <header class="topbar">
+        <button class="back-btn" id="backBtn" aria-label="Voltar etapa">
+          <span>←</span>
+        </button>
+        <div class="brand">
+          <span class="brand-mark">👟</span>
+          <span>Mapa Secreto</span>
+        </div>
+        <button class="reset-btn" id="resetBtn" type="button">Reiniciar</button>
+      </header>
+
+      <div class="progress-wrap">
+        <div class="progress-info">
+          <span id="progressText">Etapa 1 de 9</span>
+          <span id="progressPercent">11%</span>
+        </div>
+        <div class="progress-bar"><div id="progressFill"></div></div>
+      </div>
+
+      <div class="screen active" id="screen"></div>
+    </section>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>

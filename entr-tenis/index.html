@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mapa Secreto dos Tênis Importados — Fornecedores</title>
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "x5d7vji05j");
+  </script>
+
+  <!-- Pixel UTMify + TikTok -->
+  <script>
+    window.tikTokPixelId = "6a29d1c19adc8336562bcdba";
+    var a = document.createElement("script");
+    a.setAttribute("async", "");
+    a.setAttribute("defer", "");
+    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel-tiktok.js");
+    document.head.appendChild(a);
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:    #0b0c12;
+      --card:  #13151f;
+      --card2: #1a1d2b;
+      --line:  rgba(255,255,255,.08);
+      --gold:  #f4c95d;
+      --green: #3ecf8e;
+      --text:  #e8eaf0;
+      --muted: #7a8099;
+    }
+
+    html, body { min-height: 100%; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: 0;
+      background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .shell { position: relative; z-index: 1; max-width: 540px; margin: 0 auto; padding-bottom: 80px; min-height: 100vh; }
+
+    /* TOPBAR */
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(11,12,18,.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+      padding: 14px 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .back-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text); font-size: 18px;
+      display: grid; place-items: center; cursor: pointer;
+      flex-shrink: 0; transition: background .15s;
+    }
+    .back-btn:hover { background: rgba(255,255,255,.09); }
+    .back-btn[hidden] { visibility: hidden; pointer-events: none; }
+    .topbar-title { font-size: 15px; font-weight: 800; flex: 1; }
+    .topbar-badge {
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      background: rgba(244,201,93,.12); color: var(--gold);
+      border: 1px solid rgba(244,201,93,.25);
+      border-radius: 20px; padding: 3px 10px; white-space: nowrap;
+    }
+
+    /* FILTERS */
+    .filters {
+      display: flex; gap: 8px; padding: 14px 20px;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .filters::-webkit-scrollbar { display: none; }
+    .filter-btn {
+      flex-shrink: 0; padding: 7px 16px;
+      border-radius: 20px; border: 1px solid var(--line);
+      background: transparent; color: var(--muted);
+      font-size: 13px; font-weight: 600; font-family: inherit;
+      cursor: pointer; white-space: nowrap; transition: all .15s;
+    }
+    .filter-btn.active {
+      background: rgba(244,201,93,.12);
+      border-color: rgba(244,201,93,.35);
+      color: var(--gold);
+    }
+
+    /* MAP ROUTE */
+    .map-route {
+      padding: 8px 20px 0 20px;
+      position: relative;
+    }
+    .map-route::before {
+      content: "";
+      position: absolute;
+      left: 46px;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        rgba(244,201,93,.25) 4%,
+        rgba(244,201,93,.25) 96%,
+        transparent 100%
+      );
+    }
+
+    .route-start {
+      display: flex; align-items: center; gap: 12px;
+      padding: 0 0 24px 0;
+      position: relative;
+    }
+    .route-start-pin {
+      width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--gold), #e6a820);
+      display: grid; place-items: center;
+      font-size: 22px;
+      box-shadow: 0 0 0 6px rgba(244,201,93,.12), 0 0 0 12px rgba(244,201,93,.05);
+      z-index: 2; position: relative;
+    }
+    .route-start-text { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+    .route-start-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+    .route-stop {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding-bottom: 28px;
+      position: relative;
+      cursor: pointer;
+    }
+    .route-stop:last-child { padding-bottom: 12px; }
+
+    .stop-pin {
+      width: 52px; flex-shrink: 0;
+      display: flex; flex-direction: column; align-items: center;
+      position: relative; z-index: 2;
+    }
+    .stop-dot {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--card2);
+      border: 2px solid rgba(244,201,93,.35);
+      display: grid; place-items: center;
+      font-size: 22px;
+      transition: border-color .2s, transform .15s, box-shadow .2s;
+      position: relative;
+    }
+    .route-stop:hover .stop-dot {
+      border-color: var(--gold);
+      transform: scale(1.06);
+      box-shadow: 0 0 0 6px rgba(244,201,93,.12);
+    }
+    .stop-num {
+      font-size: 10px; font-weight: 900; color: var(--muted);
+      margin-top: 5px; letter-spacing: .06em;
+    }
+
+    .stop-arm {
+      width: 18px; height: 2px;
+      background: rgba(244,201,93,.2);
+      margin-top: 25px; flex-shrink: 0;
+    }
+
+    .stop-card {
+      flex: 1; min-width: 0;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px 16px;
+      transition: border-color .18s, transform .12s;
+    }
+    .route-stop:hover .stop-card {
+      border-color: rgba(244,201,93,.3);
+      transform: translateY(-1px);
+    }
+    .stop-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+    .stop-name { font-size: 15px; font-weight: 800; }
+    .stop-rating { font-size: 12px; font-weight: 700; color: var(--gold); white-space: nowrap; }
+    .stop-category { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+    .stop-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+    .stop-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+    .stop-detail { font-size: 12px; color: var(--gold); font-weight: 700; }
+    .stop-min { font-size: 11px; color: var(--muted); }
+
+    .tag {
+      font-size: 10px; font-weight: 700; letter-spacing: .04em;
+      padding: 2px 8px; border-radius: 20px;
+    }
+    .tag-green { background: rgba(62,207,142,.1); color: var(--green); border: 1px solid rgba(62,207,142,.2); }
+    .tag-gold  { background: rgba(244,201,93,.1);  color: var(--gold);  border: 1px solid rgba(244,201,93,.2); }
+    .tag-gray  { background: rgba(255,255,255,.05); color: var(--muted); border: 1px solid var(--line); }
+
+    .route-end {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 0 0;
+    }
+    .route-end-pin {
+      width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(62,207,142,.1);
+      border: 2px solid rgba(62,207,142,.4);
+      display: grid; place-items: center;
+      font-size: 22px;
+    }
+    .route-end-text { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--green); }
+    .route-end-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+    .empty { text-align: center; padding: 60px 20px; color: var(--muted); }
+    .empty-icon { font-size: 40px; margin-bottom: 12px; }
+
+    /* DETAIL VIEW */
+    #detailView { display: none; }
+    #detailView.active { display: block; }
+    #listView.hidden { display: none; }
+
+    .detail-hero {
+      background: var(--card); border-bottom: 1px solid var(--line);
+      padding: 28px 20px 24px; display: flex; align-items: center; gap: 16px;
+    }
+    .detail-avatar {
+      width: 68px; height: 68px; border-radius: 50%;
+      background: var(--card2); border: 2px solid rgba(244,201,93,.3);
+      display: grid; place-items: center; font-size: 32px; flex-shrink: 0;
+    }
+    .detail-name { font-size: 20px; font-weight: 900; margin-bottom: 4px; }
+    .detail-category { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+
+    .detail-body { padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .info-item { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+    .info-label { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
+    .info-value { font-size: 15px; font-weight: 800; }
+    .info-value.gold { color: var(--gold); }
+
+    .section-title { font-size: 13px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+
+    .desc-box {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 14px; padding: 16px;
+      font-size: 14px; line-height: 1.7; color: #c0c5d5;
+    }
+
+    .specialty-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .cta-group { display: flex; flex-direction: column; gap: 10px; }
+
+    .btn {
+      width: 100%; padding: 16px; border-radius: 14px; border: none;
+      font-size: 15px; font-weight: 800; font-family: inherit; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      text-decoration: none; transition: opacity .15s, transform .1s;
+    }
+    .btn:active { transform: scale(.98); }
+    .btn-whatsapp { background: #25D366; color: #fff; }
+    .btn-catalog { background: var(--card2); color: var(--gold); border: 1px solid rgba(244,201,93,.25); }
+    .btn[hidden] { display: none; }
+
+    .warn-box {
+      background: rgba(244,201,93,.06); border: 1px solid rgba(244,201,93,.2);
+      border-radius: 12px; padding: 14px 16px;
+      font-size: 13px; line-height: 1.6; color: #c8a84b;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+
+    @keyframes stop-in {
+      from { opacity: 0; transform: translateX(16px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .route-stop { animation: stop-in .35s ease both; }
+
+    /* WELCOME SCREEN */
+    #welcomeView {
+      min-height: calc(100vh - 60px);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 40px 28px;
+      text-align: center;
+      gap: 0;
+    }
+    #welcomeView.hidden { display: none; }
+
+    .welcome-glow {
+      width: 110px; height: 110px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(244,201,93,.18), transparent 70%);
+      display: grid; place-items: center;
+      font-size: 54px;
+      margin-bottom: 28px;
+      animation: welcome-pulse 3s ease-in-out infinite;
+    }
+    @keyframes welcome-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(244,201,93,.25); }
+      50%       { box-shadow: 0 0 0 22px rgba(244,201,93,0); }
+    }
+
+    .welcome-eyebrow {
+      font-size: 11px; font-weight: 900; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .welcome-title {
+      font-size: clamp(26px, 6vw, 34px); font-weight: 900;
+      line-height: 1.2; margin-bottom: 16px;
+    }
+    .welcome-title span { color: var(--gold); }
+    .welcome-subtitle {
+      font-size: 15px; color: var(--muted); line-height: 1.7;
+      max-width: 340px; margin-bottom: 36px;
+    }
+
+    .welcome-stats {
+      display: flex; gap: 12px; margin-bottom: 36px; width: 100%;
+      justify-content: center;
+    }
+    .welcome-stat {
+      flex: 1; max-width: 130px;
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 14px; padding: 14px 10px;
+    }
+    .welcome-stat-value { font-size: 22px; font-weight: 900; color: var(--gold); }
+    .welcome-stat-label { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+    .welcome-btn {
+      width: 100%; max-width: 340px;
+      padding: 18px 24px; border: none; border-radius: 14px;
+      background: linear-gradient(135deg, var(--gold), #e6a820);
+      color: #0b0c12; font-size: 17px; font-weight: 900;
+      font-family: inherit; cursor: pointer;
+      animation: pulse-cta 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse-cta {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(244,201,93,.45); }
+      50%       { box-shadow: 0 0 0 14px rgba(244,201,93,0); }
+    }
+    .welcome-note { font-size: 12px; color: var(--muted); margin-top: 14px; }
+
+    @keyframes fade-slide-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    #welcomeView > * { animation: fade-slide-in .5s ease both; }
+    #welcomeView > *:nth-child(1) { animation-delay: .05s; }
+    #welcomeView > *:nth-child(2) { animation-delay: .12s; }
+    #welcomeView > *:nth-child(3) { animation-delay: .19s; }
+    #welcomeView > *:nth-child(4) { animation-delay: .26s; }
+    #welcomeView > *:nth-child(5) { animation-delay: .33s; }
+    #welcomeView > *:nth-child(6) { animation-delay: .40s; }
+
+    @media (max-width: 520px) { .shell { max-width: 100%; } }
+  </style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <button class="back-btn" id="backBtn" hidden>←</button>
+    <div class="topbar-title">👟 Mapa Secreto</div>
+    <div class="topbar-badge" id="topbarBadge">Fornecedores</div>
+  </div>
+
+  <!-- WELCOME VIEW -->
+  <div id="welcomeView">
+    <div class="welcome-glow">👟</div>
+    <div class="welcome-eyebrow">✦ seu acesso exclusivo</div>
+    <h1 class="welcome-title">O Mapa Secreto dos<br><span>Tênis Importados</span></h1>
+    <p class="welcome-subtitle">Aqui estão os fornecedores verificados pela nossa equipe. Cada parada da rota é um contato direto, testado e aprovado. Preço de importação, qualidade idêntica aos originais.</p>
+    <div class="welcome-stats">
+      <div class="welcome-stat">
+        <div class="welcome-stat-value">Diversos</div>
+        <div class="welcome-stat-label">Fornecedores</div>
+      </div>
+      <div class="welcome-stat">
+        <div class="welcome-stat-value">100%</div>
+        <div class="welcome-stat-label">Verificados</div>
+      </div>
+      <div class="welcome-stat">
+        <div class="welcome-stat-value">~85%</div>
+        <div class="welcome-stat-label">Economia média</div>
+      </div>
+    </div>
+    <button class="welcome-btn" id="startBtn">🚀 Ver minha rota de fornecedores</button>
+    <p class="welcome-note">Acesso vitalício • Atualizado regularmente</p>
+  </div>
+
+  <!-- LIST VIEW -->
+  <div id="listView" class="hidden">
+    <div class="filters" id="filterBar"></div>
+    <div class="map-route" id="mapRoute"></div>
+  </div>
+
+  <!-- DETAIL VIEW -->
+  <div id="detailView">
+    <div class="detail-hero">
+      <div class="detail-avatar" id="dAvatar"></div>
+      <div>
+        <div class="detail-name" id="dName"></div>
+        <div class="detail-category" id="dCategory"></div>
+        <div class="stop-tags" id="dTags"></div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="info-grid" id="dInfoGrid"></div>
+      <div>
+        <div class="section-title">Sobre o fornecedor</div>
+        <div class="desc-box" id="dDesc"></div>
+      </div>
+      <div>
+        <div class="section-title">Especialidades</div>
+        <div class="specialty-list" id="dSpecialties"></div>
+      </div>
+      <div class="warn-box">
+        <span>⚠️</span>
+        <span>Sempre peça amostras antes de fazer pedidos grandes. Use o guia de tamanhos incluso no Mapa para converter numeração chinesa antes de pedir.</span>
+      </div>
+      <div class="cta-group">
+        <a class="btn btn-whatsapp" id="dWhatsapp" href="#" target="_blank" rel="noopener">
+          <span>💬</span> Falar no WhatsApp
+        </a>
+        <a class="btn btn-catalog" id="dCatalog" href="#" target="_blank" rel="noopener">
+          <span>📦</span> Ver catálogo completo
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  DADOS DOS FORNECEDORES — edite aqui!
+//  campos: id, name, emoji, category, location, minOrder,
+//          deliveryDays, rating, description, specialties[],
+//          tags[], whatsapp (só números), catalog (url ou "")
+// ═══════════════════════════════════════════════════════════
+const suppliers = [
+  {
+    id: 1,
+    name: "Fornecedor 01",
+    emoji: "✔️",
+    category: "Nike",
+    location: "Guangzhou, China",
+    minOrder: "3 pares",
+    deliveryDays: "10–15 dias",
+    rating: "4.9",
+    description: "Especializado em modelos Nike com acabamento premium. Dunk, Air Force 1, Air Max e Jordan em diversas colorways. Tecido, solado e costuras idênticos aos originais. Atende revendedores brasileiros há mais de 4 anos com excelente histórico de entrega.",
+    specialties: ["Nike Dunk", "Air Force 1", "Air Max 90", "Air Max 95", "Jordan 1", "Jordan 4"],
+    tags: [{ label: "Verificado", type: "green" }, { label: "Nike", type: "gold" }],
+    whatsapp: "5511999990001",
+    whatsappMsg: "Olá! Vi seu contato no Mapa Secreto dos Tênis Importados. Tenho interesse em modelos Nike. Pode me enviar o catálogo atualizado com preços?",
+    catalog: ""
+  },
+  {
+    id: 2,
+    name: "Fornecedor 02",
+    emoji: "🔥",
+    category: "Adidas",
+    location: "Yiwu, China",
+    minOrder: "3 pares",
+    deliveryDays: "12–18 dias",
+    rating: "4.8",
+    description: "Foco em modelos Adidas com alta fidelidade ao original. Campus, Samba, Forum, NMD e Ultraboost disponíveis em diversas cores e tamanhos. Ótima variedade para uso próprio e revenda.",
+    specialties: ["Adidas Campus", "Adidas Samba", "Adidas Forum", "NMD", "Ultraboost", "Gazelle"],
+    tags: [{ label: "Verificado", type: "green" }, { label: "Adidas", type: "gold" }],
+    whatsapp: "5511999990002",
+    whatsappMsg: "Olá! Vi seu contato no Mapa Secreto dos Tênis Importados. Quero ver modelos Adidas disponíveis. Pode me enviar o catálogo com preços?",
+    catalog: ""
+  },
+  {
+    id: 3,
+    name: "Fornecedor 03",
+    emoji: "👑",
+    category: "Grife & LV",
+    location: "Shenzhen, China",
+    minOrder: "2 pares",
+    deliveryDays: "15–20 dias",
+    rating: "4.7",
+    description: "Referência em tênis de grife com acabamento de altíssima qualidade. Louis Vuitton Trainer e Skate, Dior B27, Balenciaga Track e Triple S. Ideal para quem busca modelos de luxo sem pagar preço absurdo.",
+    specialties: ["LV Trainer", "LV Skate", "Dior B27", "Balenciaga Track", "Balenciaga Triple S"],
+    tags: [{ label: "Verificado", type: "green" }, { label: "Grife", type: "gray" }],
+    whatsapp: "5511999990003",
+    whatsappMsg: "Olá! Vi seu contato no Mapa Secreto dos Tênis Importados. Tenho interesse em modelos de grife. Pode me enviar o catálogo atualizado?",
+    catalog: ""
+  },
+  {
+    id: 4,
+    name: "Fornecedor 04",
+    emoji: "⚡",
+    category: "Esportivos",
+    location: "Guangzhou, China",
+    minOrder: "5 pares",
+    deliveryDays: "10–14 dias",
+    rating: "4.8",
+    description: "Especializado em tênis esportivos de corrida e academia. New Balance 9060, Asics Gel, Puma Suede e modelos de corrida em geral. Solado reforçado, material respirável e numeração fiel ao padrão brasileiro.",
+    specialties: ["New Balance 9060", "New Balance 550", "Asics Gel", "Puma Suede", "Corrida geral"],
+    tags: [{ label: "Verificado", type: "green" }, { label: "Esportivo", type: "gold" }],
+    whatsapp: "5511999990004",
+    whatsappMsg: "Olá! Vi seu contato no Mapa Secreto dos Tênis Importados. Tenho interesse em tênis esportivos. Pode me enviar o catálogo com preços e tamanhos?",
+    catalog: ""
+  },
+  {
+    id: 5,
+    name: "Fornecedor 05",
+    emoji: "🕹️",
+    category: "Collab & Retrô",
+    location: "Shenzhen, China",
+    minOrder: "2 pares",
+    deliveryDays: "15–22 dias",
+    rating: "4.7",
+    description: "Foco em lançamentos de colaboração e edições limitadas. Bad Bunny x Adidas, Travis Scott x Jordan, Yeezy 350 e modelos que esgotam em minutos nas lojas. Estoque restrito, pedidos recomendados com antecedência.",
+    specialties: ["Yeezy 350", "Travis Scott Jordan", "Bad Bunny Adidas", "Jordan Low Concord", "Collab raro"],
+    tags: [{ label: "Verificado", type: "green" }, { label: "Collab", type: "gray" }],
+    whatsapp: "5511999990005",
+    whatsappMsg: "Olá! Vi seu contato no Mapa Secreto dos Tênis Importados. Tenho interesse em collabs e modelos raros. Quais colorways você tem disponíveis agora?",
+    catalog: ""
+  },
+  {
+    id: 6,
+    name: "Fornecedor 06",
+    emoji: "📦",
+    category: "Atacado",
+    location: "Yiwu, China",
+    minOrder: "15 pares",
+    deliveryDays: "10–15 dias",
+    rating: "4.6",
+    description: "Ideal para revendedores que compram em volume. Preços mais baixos do mapa a partir de 15 pares mistos. Trabalha com todas as marcas populares em todos os tamanhos. Ótimo para montar estoque diversificado.",
+    specialties: ["Alto volume", "Preço de fábrica", "Todas as marcas", "Todos os tamanhos", "Misto por modelo"],
+    tags: [{ label: "Verificado", type: "green" }, { label: "Atacado", type: "gray" }],
+    whatsapp: "5511999990006",
+    whatsappMsg: "Olá! Vi seu contato no Mapa Secreto dos Tênis Importados. Tenho interesse em comprar no atacado. Qual o preço por par a partir de 15 pares?",
+    catalog: ""
+  }
+];
+
+// ═══════════════════════════════════════════════════════════
+//  APP
+// ═══════════════════════════════════════════════════════════
+const categories = ['Todos', ...new Set(suppliers.map(s => s.category))];
+let activeCategory = 'Todos';
+
+const welcomeView = document.getElementById('welcomeView');
+const listView    = document.getElementById('listView');
+const detailView  = document.getElementById('detailView');
+const backBtn     = document.getElementById('backBtn');
+const topbarBadge = document.getElementById('topbarBadge');
+const filterBar   = document.getElementById('filterBar');
+const mapRoute    = document.getElementById('mapRoute');
+
+function showMap() {
+  welcomeView.classList.add('hidden');
+  listView.classList.remove('hidden');
+  window.scrollTo(0, 0);
+}
+
+document.getElementById('startBtn').addEventListener('click', () => {
+  localStorage.setItem('mapa_tenis_entr_started', '1');
+  showMap();
+});
+
+if (localStorage.getItem('mapa_tenis_entr_started')) {
+  showMap();
+}
+
+categories.forEach(cat => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn' + (cat === 'Todos' ? ' active' : '');
+  btn.textContent = cat;
+  btn.addEventListener('click', () => {
+    activeCategory = cat;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderMap();
+  });
+  filterBar.appendChild(btn);
+});
+
+function renderMap() {
+  const filtered = suppliers.filter(s =>
+    activeCategory === 'Todos' || s.category === activeCategory
+  );
+
+  if (filtered.length === 0) {
+    mapRoute.innerHTML = `<div class="empty"><div class="empty-icon">👟</div><p>Nenhum fornecedor nessa categoria.</p></div>`;
+    return;
+  }
+
+  mapRoute.innerHTML = `
+    <div class="route-start">
+      <div class="route-start-pin">👟</div>
+      <div>
+        <div class="route-start-text">Início da rota</div>
+        <div class="route-start-sub">${filtered.length} fornecedor${filtered.length !== 1 ? 'es' : ''} verificado${filtered.length !== 1 ? 's' : ''}</div>
+      </div>
+    </div>
+
+    ${filtered.map((s, i) => `
+      <div class="route-stop" data-id="${s.id}" style="animation-delay:${i * 60}ms">
+        <div class="stop-pin">
+          <div class="stop-dot">${s.emoji}</div>
+          <div class="stop-num">Nº ${String(i + 1).padStart(2, '0')}</div>
+        </div>
+        <div class="stop-arm"></div>
+        <div class="stop-card">
+          <div class="stop-card-top">
+            <div class="stop-name">${s.name}</div>
+            <div class="stop-rating">⭐ ${s.rating}</div>
+          </div>
+          <div class="stop-category">${s.category} • ${s.location}</div>
+          <div class="stop-tags">
+            ${s.tags.map(t => `<span class="tag tag-${t.type}">${t.label}</span>`).join('')}
+          </div>
+          <div class="stop-footer">
+            <div class="stop-min">Mín: ${s.minOrder}</div>
+            <div class="stop-detail">Ver detalhes →</div>
+          </div>
+        </div>
+      </div>
+    `).join('')}
+
+    <div class="route-end">
+      <div class="route-end-pin">✅</div>
+      <div>
+        <div class="route-end-text">Fim da rota</div>
+        <div class="route-end-sub">Clique em qualquer parada para ver detalhes e contato</div>
+      </div>
+    </div>
+  `;
+
+  mapRoute.querySelectorAll('.route-stop').forEach(stop => {
+    stop.addEventListener('click', () => openDetail(Number(stop.dataset.id)));
+  });
+}
+
+function openDetail(id) {
+  const s = suppliers.find(x => x.id === id);
+  if (!s) return;
+
+  document.getElementById('dAvatar').textContent   = s.emoji;
+  document.getElementById('dName').textContent     = s.name;
+  document.getElementById('dCategory').textContent = s.category + ' • ' + s.location;
+  document.getElementById('dTags').innerHTML       = s.tags.map(t => `<span class="tag tag-${t.type}">${t.label}</span>`).join('');
+  document.getElementById('dDesc').textContent     = s.description;
+
+  document.getElementById('dInfoGrid').innerHTML = `
+    <div class="info-item"><div class="info-label">Pedido mínimo</div><div class="info-value gold">${s.minOrder}</div></div>
+    <div class="info-item"><div class="info-label">Prazo de entrega</div><div class="info-value">${s.deliveryDays}</div></div>
+    <div class="info-item"><div class="info-label">Avaliação</div><div class="info-value gold">⭐ ${s.rating}</div></div>
+    <div class="info-item"><div class="info-label">Localização</div><div class="info-value" style="font-size:13px">${s.location}</div></div>
+  `;
+
+  document.getElementById('dSpecialties').innerHTML = s.specialties.map(sp => `<span class="tag tag-gray">${sp}</span>`).join('');
+
+  const waLink = `https://wa.me/${s.whatsapp}?text=${encodeURIComponent(s.whatsappMsg)}`;
+  document.getElementById('dWhatsapp').href = waLink;
+
+  const catalogBtn = document.getElementById('dCatalog');
+  if (s.catalog) {
+    catalogBtn.href = s.catalog;
+    catalogBtn.removeAttribute('hidden');
+  } else {
+    catalogBtn.setAttribute('hidden', '');
+  }
+
+  listView.classList.add('hidden');
+  detailView.classList.add('active');
+  backBtn.removeAttribute('hidden');
+  topbarBadge.textContent = s.name;
+  window.scrollTo(0, 0);
+}
+
+backBtn.addEventListener('click', () => {
+  detailView.classList.remove('active');
+  listView.classList.remove('hidden');
+  backBtn.setAttribute('hidden', '');
+  topbarBadge.textContent = 'Fornecedores';
+  window.scrollTo(0, 0);
+});
+
+renderMap();
+</script>
+</body>
+</html>

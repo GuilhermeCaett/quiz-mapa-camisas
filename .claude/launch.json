@@ -3,9 +3,10 @@
   "configurations": [
     {
       "name": "quiz-mapa-camisas",
-      "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "3456"],
-      "port": 3456
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["server.js"],
+      "port": 3456,
+      "autoPort": true
     }
   ]
 }
