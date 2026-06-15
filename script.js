@@ -1,5 +1,5 @@
 const CHECKOUT_URL = "https://pay.cakto.com.br/st63i4q_921898";
-const STORAGE_KEY = "mapa_camisas_quiz_state_v2";
+
 
 // pauses[questionIndex](answer) → { msg, img? } | null
 const pauses = {
@@ -73,7 +73,7 @@ const questions = [
   }
 ];
 
-const state = loadState();
+const state = { step: 0, answers: [], pause: null };
 const screen = document.getElementById("screen");
 const backBtn = document.getElementById("backBtn");
 const resetBtn = document.getElementById("resetBtn");
@@ -83,16 +83,8 @@ const progressFill = document.getElementById("progressFill");
 
 let _navDir = 1; // 1 = avançar, -1 = voltar
 
-function loadState() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    if (saved && Number.isInteger(saved.step)) return saved;
-  } catch (e) {}
-  return { step: 0, answers: [], pause: null };
-}
 
-function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+function saveState() { // localStorage removido
 }
 
 function transition(renderFn) {
@@ -581,7 +573,6 @@ backBtn.addEventListener("click", () => {
 });
 
 resetBtn.addEventListener("click", () => {
-  localStorage.removeItem(STORAGE_KEY);
   state.step = 0;
   state.answers = [];
   state.pause = null;
