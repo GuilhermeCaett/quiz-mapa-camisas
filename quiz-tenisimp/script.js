@@ -3,14 +3,14 @@ const STORAGE_KEY = "mapa_tenis_quiz_state_v1";
 
 // pauses[questionIndex](answer) → { msg, img? } | null
 const pauses = {
-  1: () => ({ msg: "Um Nike Dunk custa <span style='color:#d12d35'>R$899</span> na loja oficial. O mesmo tênis, mesmos materiais, mesma qualidade, sai por <span style='color:#f4c95d'>R$130</span> do jeito que o <span style='color:#f4c95d'>Mapa Secreto dos Tênis Importados</span> ensina.", img: "../assets/dunkcacaowow.png" }),
+  1: () => ({ msg: "Um Nike Dunk custa <span style='color:#d12d35'>R$899</span> na loja oficial. O mesmo tênis, mesmos materiais, mesma qualidade, sai por <span style='color:#f4c95d'>R$130</span> do jeito que o <span style='color:#f4c95d'>Mapa Secreto dos Tênis Importados</span> ensina.", img: "../assets/dunkcacaowow.webp" }),
   2: () => ({ msg: "Cada tênis tem fornecedores diferentes. Por isso o Mapa é separado por tipos de fornecedores." }),
   3: (answer) => answer === "Nunca"
     ? { msg: "A maioria das pessoas nem sabe que dá pra comprar direto, e continua pagando caro sem precisar." }
     : { msg: "Então você já sabe como é difícil achar um fornecedor de qualidade no meio de tantas opções." },
   4: () => ({ msg: "Esses são exatamente os critérios que usamos pra filtrar e validar cada fornecedor do Mapa." }),
   5: (answer) => (answer === "Revenda" || answer === "Uso próprio e revenda")
-    ? { msg: "Usuários que revendem relatam margens entre <span style='color:#f4c95d'>200% e 500%</span> nos modelos mais procurados.", msgAbove: true, img: "../assets/depoimento-pausatec.png", imgStyle: "aspect-ratio:9/16;object-fit:cover;max-height:75vh;" }
+    ? { msg: "Usuários que revendem relatam margens entre <span style='color:#f4c95d'>200% e 500%</span> nos modelos mais procurados.", msgAbove: true, img: "../assets/depoimento-pausatec.webp", imgStyle: "aspect-ratio:9/16;object-fit:cover;max-height:75vh;" }
     : null,
   6: () => ({ msg: "Nossa equipe levou 6 meses testando e validando cada contato antes de adicionar ao Mapa." }),
 };
@@ -201,7 +201,7 @@ function renderQuestion(question) {
 
 function renderPause(pause) {
   const { msg, img, carousel } = typeof pause === 'string' ? { msg: pause } : pause;
-  const convImages = ['../assets/feed1.png','../assets/feed2.png','../assets/feed3.png','../assets/feed4.png'];
+  const convImages = ['../assets/feed1.webp','../assets/feed2.webp','../assets/feed3.webp','../assets/feed4.webp'];
   transition(() => {
     if (carousel) {
       screen.innerHTML = `
@@ -300,15 +300,15 @@ function renderLoadingThenResult() {
 }
 
 const carouselImages = [
-  "../assets/dunkcacaowow.png",
-  "../assets/adidascampus.png",
-  "../assets/jordanlowconcord.png",
-  "../assets/jordanlowtravis.png",
-  "../assets/badbunny.png",
-  "../assets/yeezy350.png",
-  "../assets/lvskate.png",
-  "../assets/nb9060.png",
-  "../assets/corrida.png",
+  "../assets/dunkcacaowow.webp",
+  "../assets/adidascampus.webp",
+  "../assets/jordanlowconcord.webp",
+  "../assets/jordanlowtravis.webp",
+  "../assets/badbunny.webp",
+  "../assets/yeezy350.webp",
+  "../assets/lvskate.webp",
+  "../assets/nb9060.webp",
+  "../assets/corrida.webp",
 ];
 
 function renderResult() {
@@ -348,14 +348,14 @@ function renderResult() {
       </div>
 
       <h2>Quanto <span class="title-gold">você economiza</span> na prática</h2>
-      <img class="comparacao-img" src="../assets/comparacaotenis.png" alt="Comparação de preços antes e depois do Mapa Secreto" onerror="this.style.display='none'" />
+      <img class="comparacao-img" src="../assets/comparacaotenis.webp" alt="Comparação de preços antes e depois do Mapa Secreto" onerror="this.style.display='none'" />
       <button class="cta cta-pulse cta-anchor" type="button" id="ctaAnchorBtn">💰 Quero economizar também</button>
 
       <div class="testimonials-section">
         <h2><span class="title-gold">O que dizem</span> quem já tem o Mapa</h2>
         <div class="carousel-wrap carousel-conv">
           <div class="carousel-track" id="convTrack">
-            ${["feed1.png","feed2.png","feed3.png","feed4.png"].map((src, i) => `
+            ${["feed1.webp","feed2.webp","feed3.webp","feed4.webp"].map((src, i) => `
               <div class="carousel-slide carousel-slide-conv">
                 <img src="../assets/${src}" alt="Depoimento ${i + 1}" loading="lazy" />
               </div>
@@ -419,7 +419,7 @@ function renderResult() {
         <div class="guarantee-badge">🛡️</div>
         <h2>Risco zero. <span class="title-gold">Literalmente.</span></h2>
         <p class="guarantee-text">Você tem <strong>7 dias de garantia incondicional</strong>. Se por qualquer motivo não gostar, é só pedir o reembolso direto na plataforma. O dinheiro volta na hora, sem burocracia, sem perguntas.</p>
-        <img class="guarantee-img" src="../assets/depoimentoreembolso.png" alt="Depoimento de reembolso" onerror="this.style.display='none'" />
+        <img class="guarantee-img" src="../assets/depoimentoreembolso.webp" alt="Depoimento de reembolso" onerror="this.style.display='none'" />
         <p class="guarantee-sub">Esse é o nível de confiança que temos no Mapa Secreto.</p>
       </div>
 
