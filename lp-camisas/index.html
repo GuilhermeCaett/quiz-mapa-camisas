@@ -195,18 +195,40 @@
     .deliverable-name { font-weight: 700; font-size: 15px; margin-bottom: 4px; color: var(--text); }
     .deliverable-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
 
-    /* ─── TESTIMONIALS ─── */
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+    /* ─── TESTIMONIALS CAROUSEL ─── */
+    .testi-carousel {
+      position: relative; overflow: hidden;
+      border-radius: 16px;
+    }
+    .testi-track {
+      display: flex; transition: transform .4s ease;
+    }
+    .testi-slide {
+      flex: 0 0 100%; min-width: 0;
     }
     .testimonial-img {
-      width: 100%; border-radius: 14px;
+      width: 100%; border-radius: 16px;
       box-shadow: 0 4px 24px rgba(0,0,0,.4);
       display: block;
     }
-    .testimonial-full { grid-column: span 2; }
+    .testi-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(11,12,18,.75); border: 1px solid var(--line);
+      color: var(--text); font-size: 22px; width: 40px; height: 40px;
+      border-radius: 50%; cursor: pointer; display: grid; place-items: center;
+      backdrop-filter: blur(6px); z-index: 2;
+    }
+    .testi-btn.prev { left: 10px; }
+    .testi-btn.next { right: 10px; }
+    .testi-dots {
+      display: flex; justify-content: center; gap: 6px; margin-top: 14px;
+    }
+    .testi-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--line); cursor: pointer;
+      transition: background .2s, transform .2s;
+    }
+    .testi-dot.active { background: var(--gold); transform: scale(1.3); }
 
     /* ─── PRICE BOX ─── */
     .price-box {
@@ -305,7 +327,7 @@
       <span class="badge">♾️ Acesso vitalício</span>
     </div>
 
-    <a class="cta-btn" href="https://pay.cakto.com.br/st63i4q_921898">🗺️ QUERO MEU ACESSO AGORA</a>
+    <button class="cta-btn" onclick="document.getElementById('comprar').scrollIntoView({behavior:'smooth'})">🗺️ QUERO MEU ACESSO AGORA</button>
     <p class="cta-sub">Pagamento único de R$37 • Acesso imediato</p>
   </div>
 
@@ -315,7 +337,7 @@
   <section>
     <h2>Quanto <span class="gold">você economiza</span> na prática</h2>
     <img class="comparacao-img" src="../assets/comparacao.webp" alt="Comparação de preços antes e depois do Mapa Secreto" />
-    <a class="cta-btn" href="https://pay.cakto.com.br/st63i4q_921898">💰 QUERO ECONOMIZAR TAMBÉM</a>
+    <button class="cta-btn" onclick="document.getElementById('comprar').scrollIntoView({behavior:'smooth'})">💰 QUERO ECONOMIZAR TAMBÉM</button>
     <p class="cta-sub">de R$297 por apenas R$37 hoje</p>
   </section>
 
@@ -375,12 +397,23 @@
   <!-- PROVAS SOCIAIS -->
   <section>
     <h2><span class="gold">O que dizem</span> quem já tem o Mapa</h2>
-    <div class="testimonials-grid">
-      <div><img class="testimonial-img" src="../assets/conv.1.webp" alt="Depoimento 1" loading="lazy" /></div>
-      <div><img class="testimonial-img" src="../assets/conv.2.webp" alt="Depoimento 2" loading="lazy" /></div>
-      <div><img class="testimonial-img" src="../assets/conv.3.webp" alt="Depoimento 3" loading="lazy" /></div>
-      <div><img class="testimonial-img" src="../assets/conv.4.webp" alt="Depoimento 4" loading="lazy" /></div>
-      <div class="testimonial-full"><img class="testimonial-img" src="../assets/conv.5.webp" alt="Depoimento 5" loading="lazy" /></div>
+    <div class="testi-carousel" id="testiCarousel">
+      <div class="testi-track" id="testiTrack">
+        <div class="testi-slide"><img class="testimonial-img" src="../assets/conv.1.webp" alt="Depoimento 1" loading="lazy" /></div>
+        <div class="testi-slide"><img class="testimonial-img" src="../assets/conv.2.webp" alt="Depoimento 2" loading="lazy" /></div>
+        <div class="testi-slide"><img class="testimonial-img" src="../assets/conv.3.webp" alt="Depoimento 3" loading="lazy" /></div>
+        <div class="testi-slide"><img class="testimonial-img" src="../assets/conv.4.webp" alt="Depoimento 4" loading="lazy" /></div>
+        <div class="testi-slide"><img class="testimonial-img" src="../assets/conv.5.webp" alt="Depoimento 5" loading="lazy" /></div>
+      </div>
+      <button class="testi-btn prev" id="testiPrev" aria-label="Anterior">‹</button>
+      <button class="testi-btn next" id="testiNext" aria-label="Próximo">›</button>
+    </div>
+    <div class="testi-dots" id="testiDots">
+      <span class="testi-dot active" data-i="0"></span>
+      <span class="testi-dot" data-i="1"></span>
+      <span class="testi-dot" data-i="2"></span>
+      <span class="testi-dot" data-i="3"></span>
+      <span class="testi-dot" data-i="4"></span>
     </div>
   </section>
 
@@ -458,6 +491,33 @@
       <div class="faq-a">${item.a}</div>
     </div>
   `).join("");
+
+  // ─── CARROSSEL DE DEPOIMENTOS ───
+  const track = document.getElementById("testiTrack");
+  const dots = [...document.querySelectorAll(".testi-dot")];
+  const total = 5;
+  let current = 0, autoTimer;
+
+  function goTo(i) {
+    current = (i + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((d, idx) => d.classList.toggle("active", idx === current));
+  }
+
+  document.getElementById("testiPrev").addEventListener("click", () => { goTo(current - 1); resetAuto(); });
+  document.getElementById("testiNext").addEventListener("click", () => { goTo(current + 1); resetAuto(); });
+  dots.forEach(d => d.addEventListener("click", () => { goTo(+d.dataset.i); resetAuto(); }));
+
+  // swipe touch
+  let tx = 0;
+  track.addEventListener("touchstart", e => { tx = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener("touchend", e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 40) { goTo(dx < 0 ? current + 1 : current - 1); resetAuto(); }
+  }, { passive: true });
+
+  function resetAuto() { clearInterval(autoTimer); autoTimer = setInterval(() => goTo(current + 1), 3500); }
+  resetAuto();
 
   list.querySelectorAll(".faq-q").forEach(btn => {
     btn.addEventListener("click", () => {
