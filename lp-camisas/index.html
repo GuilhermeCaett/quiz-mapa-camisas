@@ -230,23 +230,54 @@
     }
     .testi-dot.active { background: var(--gold); transform: scale(1.3); }
 
+    /* ─── SOCIAL PROOF BAR ─── */
+    .proof-bar {
+      display: flex; flex-direction: column; gap: 10px;
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 16px; padding: 18px 20px;
+      margin-bottom: 20px;
+    }
+    .proof-item { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
+    .proof-item .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .proof-item .dot.green { background: var(--green); }
+    .proof-item .dot.gold { background: var(--gold); }
+    .proof-item .dot.orange { background: #f97316; }
+    .stars { color: var(--gold); letter-spacing: 2px; font-size: 13px; }
+
     /* ─── PRICE BOX ─── */
     .price-box {
-      background: linear-gradient(180deg, rgba(23,26,37,.96), rgba(11,12,18,.96));
-      border: 1px solid rgba(244,201,93,.2);
+      background: linear-gradient(180deg, rgba(23,26,37,.98), rgba(11,12,18,.98));
+      border: 1px solid rgba(244,201,93,.25);
       border-radius: 24px;
-      padding: 36px 28px;
+      padding: 28px 24px;
       display: flex; flex-direction: column; align-items: center;
-      gap: 10px; text-align: center;
-      box-shadow: 0 0 60px rgba(244,201,93,.07);
+      gap: 12px; text-align: center;
+      box-shadow: 0 0 80px rgba(244,201,93,.08);
     }
-    .price-label { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
-    .price-from { font-size: 15px; color: var(--muted); }
-    .price-from span { text-decoration: line-through; color: var(--red); }
-    .price-main { font-size: 56px; font-weight: 900; line-height: 1; letter-spacing: -.03em; }
-    .price-main span.val { color: var(--gold); }
-    .price-main span.cents { font-size: 28px; color: var(--gold); }
+    .price-top-row { display: flex; align-items: center; gap: 10px; }
+    .price-from { font-size: 15px; color: var(--muted); text-decoration: line-through; }
+    .price-off-badge {
+      background: var(--red); color: #fff;
+      font-size: 12px; font-weight: 900;
+      padding: 3px 8px; border-radius: 6px;
+    }
+    .price-main { font-size: 72px; font-weight: 900; line-height: 1; letter-spacing: -.03em; color: var(--gold); }
+    .price-main-wrap { display: flex; align-items: flex-start; gap: 4px; }
+    .price-rs { font-size: 28px; font-weight: 900; color: var(--gold); margin-top: 12px; }
+    .price-cents { font-size: 28px; font-weight: 900; color: var(--gold); margin-top: 12px; }
     .price-desc { font-size: 13px; color: var(--muted); }
+    .price-payment-methods {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--muted);
+    }
+    .price-checklist { width: 100%; display: flex; flex-direction: column; gap: 8px; text-align: left; }
+    .price-check-item { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+    .price-check-item::before { content: "✓"; color: var(--green); font-weight: 900; flex-shrink: 0; }
+
+    /* ─── R$37 É MENOS QUE ─── */
+    .menos-que { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+    .menos-item { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--muted); }
+    .menos-item .menos-icon { font-size: 20px; flex-shrink: 0; }
 
     /* ─── FAQ ─── */
     .faq-list { display: flex; flex-direction: column; gap: 10px; }
@@ -420,15 +451,53 @@
   <!-- PREÇO -->
   <section id="comprar">
     <h2><span class="gold">Garanta</span> seu acesso agora</h2>
-    <p style="color:var(--muted);font-size:15px;line-height:1.65;margin-bottom:28px;">Pare de perder horas procurando contato aleatório. Acesse o Mapa Secreto das Camisas de Time™ e veja a rota completa.</p>
+
+    <!-- Prova social rápida -->
+    <div class="proof-bar">
+      <div class="proof-item"><span class="dot green"></span> Acesso imediato após a compra</div>
+      <div class="proof-item"><span class="dot gold"></span> <span class="stars">★★★★★</span> 4.9 de avaliação</div>
+      <div class="proof-item"><span class="dot orange"></span> ⚡ Entrega do acesso em menos de 1 minuto</div>
+    </div>
 
     <div class="price-box">
-      <div class="price-label">Acesso completo ao Mapa Secreto</div>
-      <div class="price-from">de <span>R$297</span></div>
-      <div class="price-main">R$<span class="val">37</span><span class="cents">,00</span></div>
-      <div class="price-desc">Pagamento único • Acesso vitalício • Entrega imediata</div>
-      <a class="cta-btn" href="https://pay.cakto.com.br/st63i4q_921898" style="margin-top:8px;">LIBERAR MEU ACESSO AGORA</a>
-      <p class="cta-sub" style="margin-top:6px;">🔒 Pagamento 100% seguro • Garantia de 7 dias</p>
+      <div class="price-top-row">
+        <span class="price-from">R$297</span>
+        <span class="price-off-badge">87% OFF</span>
+      </div>
+      <div class="price-main-wrap">
+        <span class="price-rs">R$</span>
+        <span class="price-main">37</span>
+        <span class="price-cents">,00</span>
+      </div>
+      <div class="price-desc">pagamento único · sem mensalidade · acesso vitalício</div>
+
+      <div class="price-checklist">
+        <div class="price-check-item">+23 fornecedores verificados e testados</div>
+        <div class="price-check-item">Rota de camisas retrô e seleções</div>
+        <div class="price-check-item">Player Version pelo preço de importação</div>
+        <div class="price-check-item">Guia anti-golpe incluso</div>
+        <div class="price-check-item">Acesso vitalício com atualizações</div>
+      </div>
+
+      <a class="cta-btn" href="https://pay.cakto.com.br/st63i4q_921898" style="margin-top:4px;">🗺️ QUERO MEU ACESSO AGORA</a>
+      <div class="price-payment-methods">🔒 Pix · Cartão · Boleto · Compra segura</div>
+
+      <div class="guarantee-box" style="margin-top:4px;width:100%;">
+        <div class="guarantee-icon" style="font-size:28px;">🛡️</div>
+        <div>
+          <div class="guarantee-title" style="font-size:15px;">Garantia de 7 dias</div>
+          <p class="guarantee-desc">Reembolso total sem perguntas.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- R$37 é menos que... -->
+    <p style="font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:28px;margin-bottom:12px;">R$37 É MENOS QUE...</p>
+    <div class="menos-que">
+      <div class="menos-item"><span class="menos-icon">🍔</span> Um iFood essa semana</div>
+      <div class="menos-item"><span class="menos-icon">🎬</span> Dois meses de streaming</div>
+      <div class="menos-item"><span class="menos-icon">☕</span> Uma semana de café no trampo</div>
+      <div class="menos-item"><span class="menos-icon">👕</span> 10% de uma camisa no shopping</div>
     </div>
   </section>
 
